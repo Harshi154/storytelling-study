@@ -1,0 +1,370 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XML Character Entities</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:#fff;
+}
+
+header{
+    background:linear-gradient(90deg,#ff9800,#ff5722);
+    padding:35px;
+    text-align:center;
+    box-shadow:0 5px 15px rgba(0,0,0,.4);
+}
+
+header h1{
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+header p{
+    font-size:18px;
+    line-height:1.8;
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:35px auto;
+}
+
+.intro{
+    background:rgba(255,255,255,.12);
+    padding:25px;
+    border-radius:20px;
+    backdrop-filter:blur(10px);
+    box-shadow:0 8px 20px rgba(0,0,0,.4);
+    margin-bottom:35px;
+}
+
+.intro h2{
+    color:#FFD54F;
+    margin-bottom:15px;
+}
+
+.intro p{
+    line-height:1.9;
+    font-size:17px;
+    text-align:justify;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:rgba(255,255,255,.10);
+    padding:25px;
+    border-radius:18px;
+    backdrop-filter:blur(12px);
+    transition:.4s;
+    border:1px solid rgba(255,255,255,.2);
+    box-shadow:0 10px 20px rgba(0,0,0,.35);
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    background:rgba(255,255,255,.18);
+}
+
+.icon{
+    font-size:55px;
+    text-align:center;
+}
+
+.card h2{
+    color:#FFD54F;
+    text-align:center;
+    margin:15px 0;
+}
+
+.card p{
+    line-height:1.8;
+    text-align:justify;
+}
+
+.code{
+    background:#111827;
+    color:#7CFC00;
+    padding:12px;
+    margin-top:15px;
+    border-left:5px solid gold;
+    border-radius:8px;
+    font-family:Consolas;
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:35px;
+    background:white;
+    color:#222;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+th{
+    background:#ff5722;
+    color:white;
+    padding:14px;
+}
+
+td{
+    padding:12px;
+    border:1px solid #ddd;
+    text-align:center;
+}
+
+tr:nth-child(even){
+    background:#f4f4f4;
+}
+
+.note{
+    margin-top:35px;
+    background:#263238;
+    padding:25px;
+    border-left:6px solid #FFD54F;
+    border-radius:15px;
+}
+
+.note h2{
+    color:#FFD54F;
+    margin-bottom:12px;
+}
+
+footer{
+    text-align:center;
+    padding:18px;
+    margin-top:40px;
+    background:#111827;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>Character Entities in XML</h1>
+<p>Understanding Character Entities, Their Types, Uses and Examples</p>
+</header>
+
+<div class="container">
+
+<div class="intro">
+
+<h2>📖 What are Character Entities?</h2>
+
+<p>
+Character entities are special codes used in XML to represent reserved or special
+characters that cannot be written directly in XML documents. XML uses symbols
+such as <b>&lt;</b>, <b>&gt;</b>, and <b>&amp;</b> as part of its syntax. If these
+symbols are written directly as data, the XML parser may interpret them as tags
+or markup and generate an error.
+</p>
+
+<br>
+
+<p>
+Character entities solve this problem by replacing special characters with their
+corresponding entity names or numeric values. This makes XML documents valid,
+readable, and free from parsing errors.
+</p>
+
+</div>
+
+<div class="intro">
+
+<h2>🎯 How Character Entities Help While Writing XML Code</h2>
+
+<ul style="line-height:2;font-size:17px;margin-left:25px;">
+<li>Prevent XML syntax errors.</li>
+<li>Allow reserved symbols to appear as normal text.</li>
+<li>Improve readability of XML documents.</li>
+<li>Ensure compatibility across different systems.</li>
+<li>Represent special Unicode characters easily.</li>
+<li>Make XML documents portable and standardized.</li>
+</ul>
+
+</div>
+
+<h1 style="text-align:center;margin-bottom:25px;color:#FFD54F;">
+Types of Character Entities
+</h1>
+
+<div class="grid">
+
+<div class="card">
+
+<div class="icon">🔤</div>
+
+<h2>1. Predefined Character Entities</h2>
+
+<p>
+Predefined entities remove ambiguity when reserved XML symbols are used as text.
+These are defined in the XML specification and are the most commonly used entities.
+</p>
+
+<div class="code">
+&amp;amp; &nbsp; → &amp;<br><br>
+
+&amp;lt; &nbsp;&nbsp;&nbsp; → &lt;<br><br>
+
+&amp;gt; &nbsp;&nbsp;&nbsp; → &gt;<br><br>
+
+&amp;apos; → '<br><br>
+
+&amp;quot; → "
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="icon">🔢</div>
+
+<h2>2. Numeric Character Entities</h2>
+
+<p>
+Numeric entities represent characters using their Unicode number. They can be
+written in decimal or hexadecimal format.
+</p>
+
+<div class="code">
+Decimal Syntax:<br><br>
+
+&amp;#DecimalNumber;<br><br>
+
+Example:<br>
+
+&amp;#60; → &lt;
+</div>
+
+<div class="code">
+Hexadecimal Syntax:<br><br>
+
+&amp;#xHexValue;<br><br>
+
+Example:<br>
+
+&amp;#x3C; → &lt;
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="icon">🏷️</div>
+
+<h2>3. Named Character Entities</h2>
+
+<p>
+Named entities are easier to remember than numeric entities because each entity
+is represented by a meaningful name.
+</p>
+
+<div class="code">
+Aacute → Á<br><br>
+
+ugrave → ù<br><br>
+
+copy → ©<br><br>
+
+reg → ®
+</div>
+
+<p style="margin-top:15px;">
+Named entities improve readability and make XML code easier to understand.
+</p>
+
+</div>
+
+</div>
+
+<table>
+
+<tr>
+<th>Entity Name</th>
+<th>Character</th>
+<th>Decimal Reference</th>
+<th>Hexadecimal Reference</th>
+</tr>
+
+<tr>
+<td>quot</td>
+<td>"</td>
+<td>&amp;#34;</td>
+<td>&amp;#x22;</td>
+</tr>
+
+<tr>
+<td>amp</td>
+<td>&amp;</td>
+<td>&amp;#38;</td>
+<td>&amp;#x26;</td>
+</tr>
+
+<tr>
+<td>apos</td>
+<td>'</td>
+<td>&amp;#39;</td>
+<td>&amp;#x27;</td>
+</tr>
+
+<tr>
+<td>lt</td>
+<td>&lt;</td>
+<td>&amp;#60;</td>
+<td>&amp;#x3C;</td>
+</tr>
+
+<tr>
+<td>gt</td>
+<td>&gt;</td>
+<td>&amp;#62;</td>
+<td>&amp;#x3E;</td>
+</tr>
+
+</table>
+
+<div class="note">
+
+<h2>💡 Summary</h2>
+
+<p style="line-height:1.9;">
+Character entities are an essential part of XML programming. They allow developers
+to include reserved symbols and special Unicode characters safely within XML
+documents. XML supports three types of character entities:
+<b>Predefined</b>, <b>Numeric</b>, and <b>Named</b>. Using the correct character
+entity ensures that XML documents remain valid, readable, and compatible across
+different platforms and applications.
+</p>
+
+</div>
+
+</div>
+
+<footer>
+© XML Tutorial | Character Entities | Designed for Educational Purpose
+</footer>
+
+</body>
+</html>
+```
