@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML & XML Syntax Components</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#0f172a,#1e3a8a,#2563eb);
+    color:white;
+    overflow-x:hidden;
+}
+
+header{
+    text-align:center;
+    padding:40px 20px;
+}
+
+header h1{
+    font-size:45px;
+    color:#FFD700;
+    text-shadow:2px 2px 10px black;
+}
+
+header p{
+    margin-top:15px;
+    font-size:18px;
+    width:80%;
+    margin-left:auto;
+    margin-right:auto;
+    line-height:1.8;
+}
+
+.container{
+    width:90%;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:25px;
+    padding:30px 0 60px;
+}
+
+.card{
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(12px);
+    border-radius:20px;
+    padding:25px;
+    transition:.4s;
+    border:1px solid rgba(255,255,255,.2);
+    box-shadow:0 10px 25px rgba(0,0,0,.3);
+}
+
+.card:hover{
+    transform:translateY(-10px) scale(1.03);
+    background:rgba(255,255,255,.2);
+}
+
+.icon{
+    font-size:50px;
+    text-align:center;
+    margin-bottom:15px;
+}
+
+.card h2{
+    text-align:center;
+    color:#FFD700;
+    margin-bottom:15px;
+}
+
+.card p{
+    line-height:1.8;
+    font-size:16px;
+}
+
+.example{
+    background:#111827;
+    margin-top:18px;
+    border-left:5px solid #FFD700;
+    padding:12px;
+    border-radius:8px;
+    font-family:Consolas;
+    color:#7CFC00;
+    overflow-x:auto;
+}
+
+footer{
+    text-align:center;
+    padding:20px;
+    background:#06111f;
+    margin-top:30px;
+    font-size:17px;
+}
+
+.highlight{
+    color:#FFD700;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>HTML & XML Syntax Components</h1>
+
+<p>
+Tags, Elements, Attributes, and Comments form the core structural syntax of both
+<span class="highlight">HTML</span> and
+<span class="highlight">XML</span>. HTML uses predefined tags to display content
+in a web browser, whereas XML uses custom tags to store and transport structured data.
+</p>
+
+</header>
+
+<div class="container">
+
+<div class="card">
+<div class="icon">🏷️</div>
+<h2>1. Tags</h2>
+
+<p>
+Tags are labels enclosed within angle brackets (&lt; &gt;) that define the beginning
+and ending of a component.
+</p>
+
+<br>
+
+<p><b>Start Tag:</b> Indicates where an element begins.</p>
+
+<div class="example">
+&lt;p&gt;
+</div>
+
+<p><br><b>End Tag:</b> Indicates where an element ends using a forward slash.</p>
+
+<div class="example">
+&lt;/p&gt;
+</div>
+
+<p><br><b>Self-Closing Tag:</b> Used when no content exists inside an element.</p>
+
+<div class="example">
+&lt;img /&gt;
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="icon">📦</div>
+
+<h2>2. Elements</h2>
+
+<p>
+An element is the complete structure consisting of an opening tag, content,
+and a closing tag.
+</p>
+
+<div class="example">
+HTML Example:<br><br>
+
+&lt;p&gt;Hello World&lt;/p&gt;
+</div>
+
+<div class="example" style="margin-top:15px;">
+XML Example:<br><br>
+
+&lt;price&gt;29.99&lt;/price&gt;
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="icon">⚙️</div>
+
+<h2>3. Attributes</h2>
+
+<p>
+Attributes provide additional information about an element.
+They appear inside the opening tag using the format:
+</p>
+
+<div class="example">
+name="value"
+</div>
+
+<div class="example" style="margin-top:15px;">
+HTML Example:<br><br>
+
+&lt;a href="example"&gt;
+</div>
+
+<div class="example" style="margin-top:15px;">
+XML Example:<br><br>
+
+&lt;person gender="female"&gt;
+</div>
+
+<p style="margin-top:15px;">
+<strong>Note:</strong> XML attribute values must always be enclosed in quotation marks.
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="icon">💬</div>
+
+<h2>4. Comments</h2>
+
+<p>
+Comments are notes written inside the source code. They are ignored by browsers
+and XML parsers.
+</p>
+
+<div class="example">
+&lt;!-- Your comment goes here --&gt;
+</div>
+
+<p style="margin-top:18px;">
+<b>Rules:</b>
+
+<ul style="margin-left:20px; margin-top:10px; line-height:1.8;">
+<li>Comments cannot be nested.</li>
+<li>Do not place comments inside opening or closing tags.</li>
+<li>Comments are used only for documentation.</li>
+</ul>
+
+</p>
+
+</div>
+
+</div>
+
+<footer>
+
+Designed for Learning HTML & XML • Modern Educational Webpage
+
+</footer>
+
+</body>
+</html>
