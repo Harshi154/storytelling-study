@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XML (Extensible Markup Language)</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    padding:40px;
+    color:#333;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+}
+
+.header{
+    background:linear-gradient(90deg,#4facfe,#00f2fe);
+    color:white;
+    text-align:center;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 10px 20px rgba(0,0,0,.3);
+    margin-bottom:30px;
+}
+
+.header h1{
+    font-size:40px;
+}
+
+.header p{
+    margin-top:10px;
+    font-size:18px;
+}
+
+.card{
+    background:white;
+    border-radius:15px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+h2{
+    color:#0a5eb0;
+    margin-bottom:15px;
+    border-left:6px solid #0a5eb0;
+    padding-left:10px;
+}
+
+ul{
+    margin-left:25px;
+}
+
+li{
+    margin:10px 0;
+    line-height:1.6;
+}
+
+.table-container{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+table th{
+    background:#0a5eb0;
+    color:white;
+    padding:14px;
+}
+
+table td{
+    padding:14px;
+    border:1px solid #ddd;
+}
+
+table tr:nth-child(even){
+    background:#f5f8ff;
+}
+
+.code{
+    background:#1e1e1e;
+    color:#7CFC00;
+    padding:20px;
+    border-radius:10px;
+    overflow:auto;
+    margin-top:15px;
+    font-family:Consolas, monospace;
+    white-space:pre;
+}
+
+.highlight{
+    background:#e8f4ff;
+    border-left:6px solid #0a5eb0;
+    padding:18px;
+    border-radius:10px;
+    margin-top:15px;
+    line-height:1.8;
+}
+
+.footer{
+    text-align:center;
+    color:white;
+    margin-top:40px;
+    font-size:15px;
+}
+
+@media(max-width:768px){
+
+.header h1{
+    font-size:30px;
+}
+
+body{
+    padding:20px;
+}
+
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<div class="header">
+<h1>XML (Extensible Markup Language)</h1>
+<p>A Complete Overview of XML in Web Technologies</p>
+</div>
+
+<div class="card">
+<h2>Introduction</h2>
+
+<p style="line-height:1.8;">
+XML (Extensible Markup Language) is a text-based markup language derived from
+Standard Generalized Markup Language (SGML). It is designed to store,
+organize, and transport data rather than display it.
+</p>
+
+<div class="highlight">
+XML is software and hardware independent, making it an ideal technology for
+sharing data between different applications and web systems.
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Core Characteristics of XML</h2>
+
+<ul>
+<li><strong>Extensible:</strong> Developers can create custom tags according to application needs.</li>
+
+<li><strong>Data-Focused:</strong> XML stores and transports data without defining its appearance.</li>
+
+<li><strong>Public Standard:</strong> XML is developed by the World Wide Web Consortium (W3C).</li>
+
+<li><strong>Platform Independent:</strong> XML files work across different operating systems and programming languages.</li>
+
+</ul>
+
+</div>
+
+<div class="card">
+
+<h2>XML vs HTML</h2>
+
+<div class="table-container">
+
+<table>
+
+<tr>
+<th>Feature</th>
+<th>XML</th>
+<th>HTML</th>
+</tr>
+
+<tr>
+<td>Primary Purpose</td>
+<td>Stores and carries data</td>
+<td>Displays and formats data</td>
+</tr>
+
+<tr>
+<td>Tags</td>
+<td>Custom user-defined tags</td>
+<td>Predefined tags</td>
+</tr>
+
+<tr>
+<td>Case Sensitivity</td>
+<td>Case Sensitive</td>
+<td>Not Case Sensitive</td>
+</tr>
+
+<tr>
+<td>Syntax</td>
+<td>Strictly well-formed</td>
+<td>More flexible</td>
+</tr>
+
+<tr>
+<td>Whitespace</td>
+<td>Preserves whitespace</td>
+<td>Ignores extra spaces</td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Structure of an XML Document</h2>
+
+<p>
+Every XML document follows a hierarchical tree structure with one root element
+and multiple child elements.
+</p>
+
+<div class="code">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;contact-info&gt;
+    &lt;name&gt;Tanmay Patil&lt;/name&gt;
+    &lt;company&gt;TutorialsPoint&lt;/company&gt;
+    &lt;phone&gt;(011) 123-4567&lt;/phone&gt;
+&lt;/contact-info&gt;
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Explanation of XML Structure</h2>
+
+<ul>
+
+<li><strong>XML Declaration:</strong> Specifies XML version and character encoding.</li>
+
+<li><strong>Root Element:</strong> The parent element that contains all other elements.</li>
+
+<li><strong>Child Elements:</strong> Custom tags that store the actual information.</li>
+
+</ul>
+
+</div>
+
+<div class="card">
+
+<h2>Core XML Technologies</h2>
+
+<ul>
+
+<li><strong>DTD (Document Type Definition):</strong> Defines the structure and rules of XML documents.</li>
+
+<li><strong>XML Schema (XSD):</strong> Provides advanced validation using XML syntax.</li>
+
+<li><strong>XML DOM:</strong> Allows JavaScript and other languages to access and modify XML elements programmatically.</li>
+
+<li><strong>XSLT:</strong> Transforms XML documents into HTML pages or other formats.</li>
+
+</ul>
+
+</div>
+
+<div class="card">
+
+<h2>Summary</h2>
+
+<p style="line-height:1.8;">
+XML is one of the most important technologies for storing and exchanging data.
+Unlike HTML, which focuses on presentation, XML is designed to transport
+structured information using custom tags. XML is platform independent,
+extensible, and widely used in web services, APIs, configuration files, and
+data exchange between applications.
+</p>
+
+</div>
+
+<div class="footer">
+Designed for Web Technologies Notes | XML Overview
+</div>
+
+</div>
+
+</body>
+</html>
