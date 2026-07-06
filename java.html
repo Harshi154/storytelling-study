@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java 4th Sem Syllabus Navigation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .heading {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        /* Container that forces everything into a single horizontal row */
+        .syllabus-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: nowrap; /* Forces items to stay in one line */
+            overflow-x: auto;  /* Adds a scrollbar on mobile screens so it stays in one line */
+            padding: 15px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Styling for each unit link */
+        .unit-link {
+            display: inline-block;
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: bold;
+            padding: 12px 20px;
+            border-radius: 6px;
+            white-space: nowrap; /* Prevents text from breaking into multiple lines inside the button */
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        /* Custom colors for each unit button */
+        .u1 { background-color: #3498db; }
+        .u2 { background-color: #2ecc71; }
+        .u3 { background-color: #9b59b6; }
+        .u4 { background-color: #e67e22; }
+        .u5 { background-color: #e74c3c; }
+        .u6 { background-color: #34495e; }
+
+        /* Hover animation effects */
+        .unit-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            filter: brightness(90%);
+        }
+    </style>
+</head>
+<body>
+
+    <h2 class="heading">Java 4th Semester Syllabus</h2>
+
+    <nav class="syllabus-nav">
+        <a href="https://example.com/unit1" class="unit-link u1" title="Introduction & Basics">📦 Unit 1</a>
+        <a href="https://example.com/unit2" class="unit-link u2" title="Classes & OOPs">🏛️ Unit 2</a>
+        <a href="https://example.com/unit3" class="unit-link u3" title="Inheritance & Interfaces">🧬 Unit 3</a>
+        <a href="https://example.com/unit4" class="unit-link u4" title="Packages & Exceptions">📁 Unit 4</a>
+        <a href="https://example.com/unit5" class="unit-link u5" title="Multithreading & I/O">🧵 Unit 5</a>
+        <a href="https://example.com/unit6" class="unit-link u6" title="GUI & JDBC">🖥️ Unit 6</a>
+    </nav>
+
+</body>
+</html>
