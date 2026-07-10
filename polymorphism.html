@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Mastery: Polymorphism Core</title>
+    <style>
+        :root {
+            --brand-main: #5382a1;
+            --brand-accent: #f89820;
+            --surface-dark: #1e1e2f;
+            --bg-dark: #12121a;
+            --text-main: #333333;
+            --text-muted: #666666;
+            --panel-bg: #ffffff;
+            --correct: #2e7d32;
+            --incorrect: #c62828;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient Dynamic Floating Java Objects Background */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-token {
+            position: absolute;
+            background: rgba(83, 130, 161, 0.04);
+            border: 1px solid rgba(248, 152, 32, 0.12);
+            border-radius: 8px;
+            padding: 8px 16px;
+            color: rgba(255, 255, 255, 0.06);
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            font-size: 1.1rem;
+            animation: moveUpward 15s infinite linear;
+            bottom: -100px;
+        }
+
+        @keyframes moveUpward {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            15% { opacity: 1; }
+            85% { opacity: 1; }
+            100% { transform: translateY(-115vh) rotate(360deg); opacity: 0; }
+        }
+
+        .tok1 { left: 8%; animation-duration: 13s; animation-delay: 0s; }
+        .tok2 { left: 28%; animation-duration: 19s; animation-delay: 2s; }
+        .tok3 { left: 50%; animation-duration: 16s; animation-delay: 1s; }
+        .tok4 { left: 72%; animation-duration: 22s; animation-delay: 4s; }
+        .tok5 { left: 88%; animation-duration: 14s; animation-delay: 3s; }
+
+        /* Global Header Architecture */
+        header {
+            background-color: rgba(30, 30, 47, 0.95);
+            padding: 16px 6%;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 4px solid var(--brand-accent);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+
+        .top-left-logo {
+            width: 46px;
+            height: 46px;
+            margin-right: 18px;
+            background: var(--panel-bg);
+            border-radius: 50%;
+            padding: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .top-left-logo svg {
+            width: 36px;
+            height: 36px;
+        }
+
+        header h1 {
+            color: #ffffff;
+            font-size: 1.6rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Container & Layout Structure */
+        .workspace-container {
+            max-width: 960px;
+            margin: 45px auto;
+            padding: 0 24px;
+        }
+
+        .content-card {
+            background: var(--panel-bg);
+            padding: 45px;
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: var(--brand-main);
+            margin-top: 5px;
+            margin-bottom: 22px;
+            border-bottom: 2px solid #eef2f5;
+            padding-bottom: 12px;
+            font-size: 1.9rem;
+        }
+
+        h3 {
+            color: #2c3e50;
+            margin: 25px 0 15px 0;
+            font-size: 1.35rem;
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: #4a4a5a;
+            font-size: 1.05rem;
+        }
+
+        ul {
+            margin-bottom: 22px;
+            padding-left: 24px;
+        }
+
+        li {
+            margin-bottom: 12px;
+            color: #4a4a5a;
+            font-size: 1.05rem;
+        }
+
+        /* Premium Code Layouts */
+        pre {
+            background: #282a36;
+            color: #f8f8f2;
+            padding: 22px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            margin: 22px 0;
+            border-left: 5px solid var(--brand-accent);
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .keyword { color: #ff79c6; font-weight: bold; }
+        .type { color: #8be9fd; }
+        .comment { color: #6272a4; font-style: italic; }
+        .annotation { color: #f1fa8c; }
+
+        /* Video Section UI */
+        .video-box-container {
+            text-align: center;
+            padding: 35px;
+            background: #f4f7f9;
+            border-radius: 14px;
+            border: 2px dashed var(--brand-main);
+            margin-bottom: 40px;
+        }
+
+        .video-launcher-btn {
+            background-color: var(--brand-accent);
+            color: #ffffff;
+            border: none;
+            padding: 16px 40px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            border-radius: 35px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 5px 15px rgba(248, 152, 32, 0.35);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .video-launcher-btn:hover {
+            background-color: #e08613;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(248, 152, 32, 0.5);
+        }
+
+        .video-viewport-wrapper {
+            display: none;
+            margin-top: 25px;
+            position: relative;
+            padding-bottom: 56.25%; /* Perfect 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .video-viewport-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Examination Engine CSS */
+        .test-title {
+            color: var(--brand-accent);
+            text-align: center;
+            font-size: 2.3rem;
+            margin-bottom: 35px;
+            font-weight: 700;
+        }
+
+        .assessment-card {
+            background: #fafafa;
+            border: 1px solid #e2e8f0;
+            padding: 28px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .assessment-card:hover {
+            border-color: var(--brand-main);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .query-prompt {
+            font-weight: 600;
+            margin-bottom: 18px;
+            font-size: 1.1rem;
+            color: #1a1a24;
+        }
+
+        .selection-set {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .choice-row {
+            margin-bottom: 12px;
+        }
+
+        .choice-row label {
+            display: flex;
+            align-items: center;
+            padding: 14px 18px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .choice-row label:hover {
+            background: #f0f4f8;
+            border-color: #cbd5e1;
+        }
+
+        .choice-row input[type="radio"] {
+            margin-right: 14px;
+            transform: scale(1.25);
+            accent-color: var(--brand-main);
+        }
+
+        .evaluate-submission-btn {
+            display: block;
+            width: 100%;
+            background: var(--brand-main);
+            color: #ffffff;
+            border: none;
+            padding: 20px;
+            font-size: 1.35rem;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 35px;
+            transition: background 0.2s;
+            box-shadow: 0 5px 15px rgba(83, 130, 161, 0.3);
+        }
+
+        .evaluate-submission-btn:hover {
+            background: #416781;
+        }
+
+        /* Results Board Window */
+        #metrics-dashboard {
+            display: none;
+            margin-top: 35px;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .success-dashboard {
+            background-color: #edf7ed;
+            color: var(--correct);
+            border: 2px solid #c3e6cb;
+            box-shadow: 0 4px 15px rgba(46, 125, 50, 0.15);
+        }
+
+        /* Dynamic Feedback Modifiers */
+        .feedback-correct {
+            background-color: #edf7ed !important;
+            border: 2px solid #b7ebc6 !important;
+            color: var(--correct) !important;
+            font-weight: 600;
+        }
+
+        .feedback-incorrect {
+            background-color: #fdeded !important;
+            border: 2px solid #f5c2c2 !important;
+            color: var(--incorrect) !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-bg">
+        <div class="floating-token tok1">Animal a = new Dog();</div>
+        <div class="floating-token tok2">@Override void sound()</div>
+        <div class="floating-token tok3">calc.add(10, 20)</div>
+        <div class="floating-token tok4">Shape s = new Circle();</div>
+        <div class="floating-token tok5">Polymorphism (IS-A)</div>
+    </div>
+
+    <header>
+        <div class="top-left-logo">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                <path d="M35.4,32.2c0.4-1.4,1.1-2.7,1.8-4c1.1-2.1,0.7-3.6-1.3-4.2c-2.4-0.7-4.9-0.8-7.3-0.4c-1,.2-1.9,.6-2.9,.8c-1.4,.4-2.8,.7-4.2,.8c-3.1,.2-6.1-.5-9-1.8c-.8-.4-1.5-.9-2.1-1.5c-.7-.7-.9-1.6-.3-2.4c.5-.7,1.4-1,2.3-1.1c4.5-.4,8.9,.5,13.2,1.9c1,.3,2.1,.6,3.1,.8c1.6,.2,3.1,0,4.6-.6c.9-.4,1.7-1,2.4-1.7c.9-1,1-2.1,.1-3.1c-.8-.9-1.9-1.5-3.1-1.8c-2.9-.8-5.9-.8-8.9-.4c-3.6,.5-7,1.7-10.3,3.3c-2.8,1.4-5.2,3.3-6.9,6c-1.6,2.5-1.9,5.2-1,8.1c.9,2.8,2.7,4.9,5.2,6.5c3.7,2.3,7.9,3.3,12.2,3.5c4.7,.2,9.3-.6,13.7-2.4c1-.4,1.9-1,2.8-1.6C34.4,33.9,35,33.1,35.4,32.2z" fill="#f89820"/>
+                <path d="M26.2,12.7c.3-1,.6-2,.8-3.1c.2-.9-.1-1.5-.9-1.9c-.8-.4-1.5-.1-1.9,.7c-.6,1.4-1.2,2.8-1.8,4.2c-.3,.7-.3,1.3,.1,1.9c.4,.6,1,.9,1.7,.8C24.9,15.1,25.6,14,26.2,12.7z" fill="#5382a1"/>
+                <path d="M29.5,9.2c.4-1,.7-2,1-3c.3-1,0-1.6-.8-2c-.8-.4-1.5-.2-1.9,.7c-.7,1.6-1.4,3.2-2,4.8c-.3,.7-.2,1.4,.2,1.9c.4,.5,1.1,.8,1.8,.6C27.9,12,28.8,10.7,29.5,9.2z" fill="#5382a1"/>
+            </svg>
+        </div>
+        <h1>Java Architecture Frameworks</h1>
+    </header>
+
+    <div class="workspace-container">
+        
+        <section class="content-card">
+            <h2>Polymorphism in Java</h2>
+            <p><strong>Polymorphism in Java</strong> is a core object-oriented programming concept that allows a single interface, method, or object to take on multiple forms. Derived from the Greek words <em>poly</em> (many) and <em>morph</em> (forms), it enables developers to perform a single action in different ways based on the context or object invoking it.</p>
+            
+            <h3>Types of Polymorphism in Java</h3>
+            <p>Java supports two primary forms of polymorphism, each resolving method behavior at a different stage of program execution:</p>
+            
+            <h3>1. Compile-Time Polymorphism (Static Binding)</h3>
+            <p>This occurs when the Java compiler resolves which specific method to execute during compilation. It is achieved through <strong>Method Overloading</strong>.</p>
+            <ul>
+                <li><strong>Method Overloading:</strong> Defining multiple methods within the same class that share the exact same name but have different parameter signatures (different number, types, or order of arguments).</li>
+            </ul>
+
+<pre><span class="keyword">class</span> <span class="type">Calculator</span> {
+    <span class="keyword">int</span> add(<span class="keyword">int</span> a, <span class="keyword">int</span> b) { <span class="keyword">return</span> a + b; }
+    <span class="keyword">int</span> add(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> c) { <span class="keyword">return</span> a + b + c; } <span class="comment">// Overloaded</span>
+}</pre>
+
+            <h3>2. Runtime Polymorphism (Dynamic Binding)</h3>
+            <p>This occurs when the method call is resolved while the application is executing rather than during compilation. It is achieved through <strong>Method Overriding</strong> and <strong>Upcasting</strong>.</p>
+            <ul>
+                <li><strong>Method Overriding:</strong> When a subclass provides its own specific implementation for a method that is already defined in its parent class (with the exact same signature and return type).</li>
+                <li><strong>Upcasting:</strong> Referencing a child class object using a parent class or interface reference variable. The Java Virtual Machine (JVM) dynamically evaluates the actual object type at runtime to call the overridden method.</li>
+            </ul>
+
+<pre><span class="keyword">class</span> <span class="type">Animal</span> {
+    <span class="keyword">void</span> sound() { <span class="type">System</span>.out.println(<span class="data">"Animal makes a sound"</span>); }
+}
+
+<span class="keyword">class</span> <span class="type">Dog</span> <span class="keyword">extends</span> <span class="type">Animal</span> {
+    <span class="annotation">@Override</span>
+    <span class="keyword">void</span> sound() { <span class="type">System</span>.out.println(<span class="data">"Bark"</span>); } <span class="comment">// Overridden</span>
+}
+
+<span class="comment">// Usage Context:</span>
+<span class="type">Animal</span> myDog = <span class="keyword">new</span> <span class="type">Dog</span>(); <span class="comment">// Upcasting</span>
+myDog.sound();            <span class="comment">// Outputs "Bark" at runtime dynamically</span></pre>
+
+            <h3>Core Properties & Characteristics</h3>
+            <ul>
+                <li><strong>Object Substitution (IS-A Relationship):</strong> A parent reference variable can seamlessly hold a reference to any of its child objects. For example, <code>Shape s = new Circle();</code> is entirely valid.</li>
+                <li><strong>Reference Type Decides Visibility:</strong> The type of the reference variable determines which methods can be called on the object. The compiler will throw an error if you try to invoke a subclass-exclusive method using a superclass reference.</li>
+                <li><strong>Execution Decided by Object Instance:</strong> While the reference type checks method availability at compile time, the actual instantiated object type determines which version of an overridden method executes at runtime.</li>
+                <li><strong>Coercion (Implicit Type Conversion):</strong> Java features internal type casting properties to automatically promote narrower data types to broader data types (e.g., passing an int to a method accepting a double) to avoid type matching errors.</li>
+                <li><strong>Internal Operator Overloading:</strong> While Java prevents developers from writing custom operator overloads, the language itself utilizes internal operator polymorphism. A prime example is the <code>+</code> operator, which acts as numeric addition for numbers and string concatenation for strings.</li>
+            </ul>
+
+            <h3>Core Benefits</h3>
+            <ul>
+                <li><strong>Code Reusability:</strong> Write highly generic code using parent types or interfaces that automatically adapt to handle any new child type.</li>
+                <li><strong>Extensibility:</strong> Introduce new subclasses to an existing framework without needing to refactor or modify the underlying master code.</li>
+                <li><strong>Loose Coupling:</strong> Minimizes interdependencies between classes, allowing systems to remain modular and far easier to maintain.</li>
+            </ul>
+        </section>
+
+        <section class="video-box-container">
+            <h2>Visual Learning Laboratory</h2>
+            <p>Click the action button below to spin up and review standard video demonstrations of dynamic and static binding environments.</p>
+            <button class="video-launcher-btn" onclick="toggleVideoPlayback()">▶ Play Video Lesson</button>
+            
+            <div class="video-viewport-wrapper" id="videoContainer">
+                <iframe src="https://www.youtube.com/embed/HUPvun8Vf6E" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="content-card" id="test-panel">
+            <h2 class="test-title">Polymorphism Grand Test</h2>
+            <form id="grandTestForm">
+                <div id="quiz-deck-container"></div>
+                <button type="button" class="evaluate-submission-btn" onclick="gradeExamSheet()">Submit Assessment</button>
+            </form>
+
+            <div id="metrics-dashboard" class="success-dashboard"></div>
+        </section>
+    </div>
+
+    <script>
+        // Media Window Interface Controller
+        function toggleVideoPlayback() {
+            const viewport = document.getElementById('videoContainer');
+            viewport.style.display = (viewport.style.display === 'block') ? 'none' : 'block';
+        }
+
+        // 15 Standard Structural Polymorphism Questions
+        const questionsDeck = [
+            { q: "What does the word 'Polymorphism' literally mean?", a: ["Single inheritance", "Many forms", "Data hiding", "Structural binding"], c: 1 },
+            { q: "Which programming approach achieves Compile-Time Polymorphism?", a: ["Method Overriding", "Method Overloading", "Garbage Collection", "Upcasting"], c: 1 },
+            { q: "Compile-time polymorphism is fundamentally associated with which binding term?", a: ["Dynamic Binding", "Late Binding", "Static Binding", "Loose Binding"], c: 2 },
+            { q: "What must be different to validate an overloaded method signature?", a: ["Return types only", "Method names", "Parameter lists (count, type, or order)", "Access modifiers"], c: 2 },
+            { q: "Runtime Polymorphism is completely resolved during which phase?", a: ["Compilation time", "Application execution/runtime", "Deployment verification", "Source linking"], c: 1 },
+            { q: "What mechanism is happening when a child instance is referenced by a superclass pointer?", a: ["Downcasting", "Upcasting", "Aggregation", "Encapsulation"], c: 1 },
+            { q: "Which component evaluates and triggers the correct overridden method at runtime?", a: ["The Java Compiler", "The Code Linter", "The JVM (Java Virtual Machine)", "The Class Loader"], c: 2 },
+            { q: "If class 'Cat' extends class 'Animal', which initialization declaration represents valid Upcasting?", a: ["Cat c = new Animal();", "Animal a = new Cat();", "Animal a = new Animal();", "Cat c = new Cat();"], c: 1 },
+            { q: "What determines which structural methods are *visible* or available for selection at compile-time?", a: ["The actual instance type", "The Reference Variable Type", "The heap allocation layout", "The parent package modifier"], c: 1 },
+            { q: "What decides the execution version of an *overridden* method at runtime?", a: ["The reference type definition", "The actual target object instance", "The presence of standard keywords", "The interface declaration"], c: 1 },
+            { q: "What is implicit promotion of a narrower data type to a broader one called?", a: ["Coercion", "Overriding", "Operator Splitting", "Abstract Binding"], c: 0 },
+            { q: "Which symbol acts as a native example of internal operator polymorphism in Java?", a: ["The * operator", "The == structural operator", "The + operator", "The && operator"], c: 2 },
+            { q: "How does polymorphism influence software architecture coupling layers?", a: ["It causes tight structural lockups", "It introduces looser coupling traits", "It removes the complete class path", "It enforces fixed inline routines"], c: 1 },
+            { q: "Can developers define custom operator overloads in native Java software environments?", a: ["Yes, for any operator symbol", "Only for math equations", "No, Java restricts custom operator overloading", "Only inside final classes"], c: 2 },
+            { q: "If you call a child-exclusive method via a parent type reference, what occurs?", a: ["The program executes it perfectly", "A compile-time error occurs", "A runtime error occurs", "The method returns null"], c: 1 }
+        ];
+
+        // Generator Routine for Test Deck DOM Frameworks
+        const deckContainer = document.getElementById('quiz-deck-container');
+        questionsDeck.forEach((element, qIndex) => {
+            let cardDiv = document.createElement('div');
+            cardDiv.className = 'assessment-card';
+            cardDiv.id = `q-block-${qIndex}`;
+            
+            let queryTitle = document.createElement('div');
+            queryTitle.className = 'query-prompt';
+            queryTitle.innerText = `${qIndex + 1}. ${element.q}`;
+            cardDiv.appendChild(queryTitle);
+
+            let optionsList = document.createElement('ul');
+            optionsList.className = 'selection-set';
+
+            element.a.forEach((choice, choiceIndex) => {
+                let rowLi = document.createElement('li');
+                rowLi.className = 'choice-row';
+                rowLi.innerHTML = `
+                    <label id="row-target-${qIndex}-${choiceIndex}">
+                        <input type="radio" name="assessment-radio-${qIndex}" value="${choiceIndex}">
+                        ${choice}
+                    </label>
+                `;
+                optionsList.appendChild(rowLi);
+            });
+
+            cardDiv.appendChild(optionsList);
+            deckContainer.appendChild(cardDiv);
+        });
+
+        // Exam Evaluation Engine
+        function gradeExamSheet() {
+            let runningScore = 0;
+            
+            questionsDeck.forEach((item, index) => {
+                const checkedOption = document.querySelector(`input[name="assessment-radio-${index}"]:checked`);
+                
+                // Reset styling classes for safety passes
+                item.a.forEach((_, cIdx) => {
+                    document.getElementById(`row-target-${index}-${cIdx}`).className = '';
+                });
+
+                if (checkedOption) {
+                    const parsedUserSelection = parseInt(checkedOption.value);
+                    if (parsedUserSelection === item.c) {
+                        runningScore++;
+                        document.getElementById(`row-target-${index}-${item.c}`).className = 'feedback-correct';
+                    } else {
+                        document.getElementById(`row-target-${index}-${parsedUserSelection}`).className = 'feedback-incorrect';
+                        document.getElementById(`row-target-${index}-${item.c}`).className = 'feedback-correct';
+                    }
+                } else {
+                    // Fallback to expose target answers if missed entirely
+                    document.getElementById(`row-target-${index}-${item.c}`).className = 'feedback-correct';
+                }
+            });
+
+            // Display Score Card Results Dashboard
+            const dashboard = document.getElementById('metrics-dashboard');
+            dashboard.style.display = 'block';
+            
+            const rawPercentage = (runningScore / questionsDeck.length) * 100;
+            dashboard.innerHTML = `Assessment Processing Complete!<br>Student Score: ${runningScore} / ${questionsDeck.length} (${Math.round(rawPercentage)}%)`;
+            
+            // UI Scroll adjustments to present summary cleanly
+            window.scrollTo({ top: dashboard.offsetTop + 150, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

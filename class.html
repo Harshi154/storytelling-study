@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Java Classes Interactive Guide & Examination</title>
+  <style>
+    /* --- Modern UI Design Variables & Theme System --- */
+    :root {
+      --bg-space: #05070f;
+      --card-blur-bg: rgba(11, 15, 30, 0.82);
+      --border-glow: rgba(248, 152, 32, 0.22);
+      --java-orange: #f89820;
+      --java-blue: #5382a1;
+      --neon-cyan: #00f2ff;
+      --text-white: #f1f5f9;
+      --text-muted: #94a3b8;
+      --success-green: #2ecc71;
+      --error-red: #e74c3c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-space);
+      color: var(--text-white);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* --- Animated Java Class Architecture Background --- */
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 50%, #0d1326 0%, #05070f 100%);
+    }
+
+    .java-class-node {
+      position: absolute;
+      background: linear-gradient(135deg, rgba(83, 130, 161, 0.08) 0%, rgba(248, 152, 32, 0.1) 100%);
+      border: 1px solid rgba(0, 242, 255, 0.2);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      color: var(--neon-cyan);
+      box-shadow: 0 0 15px rgba(0, 242, 255, 0.03);
+      white-space: nowrap;
+      animation: floatUpwardClass 22s infinite linear;
+      opacity: 0;
+    }
+
+    @keyframes floatUpwardClass {
+      0% { transform: translateY(105vh) translateX(0) rotate(0deg); opacity: 0; }
+      15% { opacity: 0.75; }
+      85% { opacity: 0.75; }
+      100% { transform: translateY(-20vh) translateX(50px) rotate(360deg); opacity: 0; }
+    }
+
+    /* --- Top Navigation Header Area --- */
+    header {
+      background: rgba(5, 7, 15, 0.9);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 0.85rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+    }
+
+    .brand-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .java-icon {
+      width: 38px;
+      height: 38px;
+      background: url('https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg') no-repeat center;
+      background-size: contain;
+      filter: drop-shadow(0 0 8px var(--java-orange));
+    }
+
+    .brand-title {
+      font-weight: 800;
+      font-size: 1.35rem;
+      letter-spacing: 0.5px;
+      background: linear-gradient(to right, var(--text-white), var(--java-orange));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* --- Core Layout Wrapper --- */
+    .wrapper {
+      max-width: 920px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .hero-title {
+      font-size: 2.6rem;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      font-weight: 800;
+      text-shadow: 0 0 25px rgba(0, 242, 255, 0.25);
+      background: linear-gradient(135deg, #ffffff 40%, var(--neon-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .panel-card {
+      background: var(--card-blur-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-glow);
+      border-radius: 18px;
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.55);
+    }
+
+    h2 {
+      color: var(--java-orange);
+      font-size: 1.5rem;
+      margin-top: 1.8rem;
+      margin-bottom: 1rem;
+      border-left: 4px solid var(--java-blue);
+      padding-left: 12px;
+    }
+
+    h3 {
+      color: var(--neon-cyan);
+      font-size: 1.2rem;
+      margin: 1.2rem 0 0.5rem 0;
+    }
+
+    p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+    }
+
+    ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-muted);
+    }
+
+    li {
+      margin-bottom: 0.6rem;
+    }
+
+    /* --- Technical Syntax Highlighting Box --- */
+    pre {
+      background: #020307;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-left: 4px solid var(--java-orange);
+      padding: 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+    }
+
+    code {
+      font-family: 'Consolas', 'Courier New', Courier, monospace;
+      color: #e2e8f0;
+      font-size: 0.95rem;
+    }
+
+    /* --- Video Media Element Layer --- */
+    .video-container {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-glow);
+      background: #000;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+      aspect-ratio: 16/9;
+    }
+
+    .video-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(135deg, rgba(5, 7, 15, 0.96), rgba(17, 24, 48, 0.9));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      z-index: 5;
+    }
+
+    .video-overlay:hover {
+      background: linear-gradient(135deg, rgba(5, 7, 15, 0.88), rgba(17, 24, 48, 0.8));
+    }
+
+    .play-trigger {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--java-orange) 0%, #d47a00 100%);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+      color: white;
+      box-shadow: 0 0 25px rgba(248, 152, 32, 0.4);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      margin-bottom: 15px;
+    }
+
+    .video-overlay:hover .play-trigger {
+      transform: scale(1.12);
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* --- Grand Test UI Componentry --- */
+    .quiz-header {
+      text-align: center;
+      color: var(--java-orange);
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .q-box {
+      background: rgba(5, 7, 15, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+    }
+
+    .q-text {
+      font-weight: 600;
+      color: var(--text-white);
+      margin-bottom: 1.2rem;
+      font-size: 1.1rem;
+    }
+
+    .opt-wrapper {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 0.85rem 1.2rem;
+      border-radius: 8px;
+      margin-bottom: 0.6rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .opt-wrapper:hover {
+      background: rgba(0, 242, 255, 0.04);
+      border-color: rgba(0, 242, 255, 0.3);
+    }
+
+    .opt-wrapper input {
+      margin-right: 14px;
+      accent-color: var(--java-orange);
+      transform: scale(1.25);
+    }
+
+    .btn-submit {
+      display: block;
+      width: 100%;
+      background: linear-gradient(90deg, var(--java-orange) 0%, #e07e1b 100%);
+      color: white;
+      border: none;
+      padding: 1.25rem;
+      font-size: 1.25rem;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(248, 152, 32, 0.25);
+      transition: all 0.3s;
+      margin-top: 2rem;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(248, 152, 32, 0.45);
+    }
+
+    /* --- Evaluation Metrics Card --- */
+    .dashboard-results {
+      display: none;
+      background: rgba(46, 204, 113, 0.1);
+      border: 2px solid var(--success-green);
+      padding: 2.5rem;
+      border-radius: 14px;
+      margin-top: 2.5rem;
+      text-align: center;
+    }
+
+    .score-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: var(--success-green);
+      margin: 0.8rem 0;
+      text-shadow: 0 0 15px rgba(46, 204, 113, 0.2);
+    }
+
+    .feedback-correct {
+      background: rgba(46, 204, 113, 0.12) !important;
+      border-color: var(--success-green) !important;
+    }
+
+    .feedback-wrong {
+      background: rgba(231, 76, 60, 0.12) !important;
+      border-color: var(--error-red) !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="animated-bg" id="classBgCanvas"></div>
+
+  <header>
+    <div class="brand-container">
+      <div class="java-icon"></div>
+      <span class="brand-title">Java Blueprint Academy</span>
+    </div>
+  </header>
+
+  <div class="wrapper">
+    <h1 class="hero-title">Core Java Classes Architecture</h1>
+
+    <section class="panel-card">
+      <p>In Java, a class is a user-defined blueprint, template, or prototype used to create objects. It defines the structure, data, and behavior that all instances (objects) created from it will share.</p>
+      
+      <p>A class is a logical entity rather than a physical one; it defines a data type but does not occupy any physical memory space until you instantiate an object from it. For example, a Car class is just a design plan, while a specific Tesla or Ford parked in a garage is the actual object built from that plan.</p>
+
+      <h2>Core Components (Properties) of a Java Class</h2>
+      <p>Every standard Java class contains specific internal components that manage its data and functionality. These components are collectively known as class members:</p>
+      <ul>
+        <li><strong>Fields (Attributes/Properties):</strong> Variables declared inside the class that store the data or state of an object. For instance, a Student class might have fields like String name and int age.</li>
+        <li><strong>Methods (Behaviors):</strong> Functions defined within the class that dictate what actions the object can perform. For example, a drive() or brake() method inside a Car class.</li>
+        <li><strong>Constructors:</strong> Special code blocks used to initialize new objects when they are created. They share the exact same name as the class and have no return type.</li>
+        <li><strong>Blocks:</strong> Code segments that run during object creation (Instance Initializer Blocks) or when the class is first loaded into memory (Static Blocks).</li>
+        <li><strong>Nested Classes:</strong> Classes or interfaces written entirely inside another outer class to improve structural packaging.</li>
+      </ul>
+
+      <h2>Key Characteristics of Java Classes</h2>
+      <ul>
+        <li><strong>Encapsulation:</strong> Classes bundle fields and methods together into a single unit. They use visibility keywords like private or public to protect data from direct external tampering.</li>
+        <li><strong>Single Inheritance:</strong> In Java, a class can inherit features from only one parent class using the extends keyword, avoiding complex multiple-inheritance conflicts.</li>
+        <li><strong>Interface Implementation:</strong> While a class can only extend one superclass, it can implement multiple interfaces to inherit behavior contracts.</li>
+        <li><strong>The Root Object Class:</strong> If you do not explicitly extend another class, your class automatically extends the java.lang.Object class, which provides universal methods like toString() and equals().</li>
+      </ul>
+
+      <h2>Code Example: Definition and Instantiation</h2>
+      <p>Here is a practical look at how a class is structured and turned into a live object:</p>
+
+<pre><code>// Definition of the blueprint
+class Car {
+    // 1. Fields (Properties)
+    String color;
+    int speed;
+
+    // 2. Constructor
+    public Car(String color, int speed) {
+        this.color = color;
+        this.speed = speed;
+    }
+
+    // 3. Method (Behavior)
+    void displayDetails() {
+        System.out.println("Car color: " + color + ", Speed: " + speed + " km/h");
+    }
+}
+
+// Execution class
+public class Main {
+    public static void main(String[] args) {
+        // Creating an Object (Instance) using the 'new' keyword
+        Car myCar = new Car("Red", 120);
+        
+        // Accessing the class components
+        myCar.displayDetails(); 
+    }
+}</code></pre>
+    </section>
+
+    <section class="panel-card">
+      <h2>Video Tutorial Module</h2>
+      <p>Press the preview block below to initialize the operational video stream for Class definitions.</p>
+      
+      <div class="video-container">
+        <div class="video-overlay" id="videoCoverFrame" onclick="fireVideoPlayer()">
+          <div class="play-trigger">▶</div>
+          <p style="color: #fff; font-weight: 700; letter-spacing: 0.5px;">Click to Play Tutorial</p>
+        </div>
+        <video id="classTutorialVideo" controls>
+          <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+          Your browser does not support HTML5 video streaming tags.
+        </video>
+      </div>
+    </section>
+
+    <section class="panel-card">
+      <div class="quiz-header">Grand Class Test</div>
+      <p style="text-align: center; margin-bottom: 2rem; color: var(--text-muted);">Verify your knowledge of fields, constructors, and inheritance patterns below.</p>
+      
+      <form id="classExamForm">
+        <div id="classQuizInjector"></div>
+        <button type="button" class="btn-submit" onclick="evaluateClassExam()">Submit Answers</button>
+      </form>
+
+      <div class="dashboard-results" id="scorePanel">
+        <h2>Assessment Report</h2>
+        <div class="score-title" id="finalScoreDisplay">0 / 15</div>
+        <p id="feedbackText">Complete the quiz interface above to calculate your structural accuracy score.</p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    /* --- Particle Engine for Floating Java Classes Code Snippets --- */
+    const bgContainer = document.getElementById('classBgCanvas');
+    const classSnippets = [
+      'public class Blueprint {}', 'class Car extends Vehicle', 'String color; int speed;',
+      'public Car(String c) {}', 'implements Serializable', 'encapsulation: private',
+      'java.lang.Object', 'Static Initializer Block', 'new Car("Red", 120);'
+    ];
+    
+    for (let i = 0; i < 16; i++) {
+      let node = document.createElement('div');
+      node.className = 'java-class-node';
+      node.style.left = Math.random() * 90 + 'vw';
+      node.style.top = Math.random() * 90 + 'vh';
+      node.style.animationDelay = (Math.random() * 8) + 's';
+      node.style.animationDuration = (14 + Math.random() * 12) + 's';
+      node.innerText = classSnippets[Math.floor(Math.random() * classSnippets.length)];
+      bgContainer.appendChild(node);
+    }
+
+    /* --- Interactive Video Player Boot Sequence --- */
+    function fireVideoPlayer() {
+      document.getElementById('videoCoverFrame').style.display = 'none';
+      document.getElementById('classTutorialVideo').play();
+    }
+
+    /* --- Complete 15 Question Exam Database for Classes --- */
+    const classQuizDb = [
+      { q: "What is a class in Java?", options: ["A physical structure operating directly on the hard drive", "A user-defined blueprint, template, or prototype used to build objects", "A primitive data variable format tracking system", "An array data storage collection map"], correct: 1 },
+      { q: "How much physical memory space does a class definition occupy prior to object instantiation?", options: ["4 bytes per property field", "It depends directly on class name length", "No physical memory space is allocated until an object is built", "16 kilobytes globally"], correct: 2 },
+      { q: "The internal variables declared inside a class to hold state configurations are known as:", options: ["Methods", "Blocks", "Fields (Attributes/Properties)", "Nested Subroutines"], correct: 2 },
+      { q: "What component dictates what specific actions or behaviors a Java class instance can perform?", options: ["Fields", "Methods", "Constructors", "Static Blocks"], correct: 1 },
+      { q: "Which class block initialization segment has no explicit return type and matches the exact name of the class?", options: ["Method block", "Constructor", "Nested Class structure", "Static Initializer"], correct: 1 },
+      { q: "What code segments run when a class is first loaded into memory or during object creation?", options: ["Fields", "Methods", "Blocks (Static/Instance Initializer)", "Nested Class Interfaces"], correct: 2 },
+      { q: "Bundling data variables and behaviors into a single unit while restricting direct external access is called:", options: ["Polymorphism", "Encapsulation", "Single Inheritance", "Interface Mapping"], correct: 1 },
+      { q: "How many parent classes can a custom Java class extend directly?", options: ["Only one (Single Inheritance)", "Up to three superclasses", "An unlimited number of classes", "None, classes only implement interfaces"], correct: 0 },
+      { q: "Which specific keyword enables a class to inherit features from a singular parent class?", options: ["implements", "extends", "this", "super"], correct: 1 },
+      { q: "While a class is restricted to extending one parent class, it can implement multiple _________ to inherit behavior contracts.", options: ["Fields", "Blocks", "Interfaces", "Constructors"], correct: 2 },
+      { q: "What root class does a class automatically extend if no parent is explicitly declared?", options: ["java.lang.System", "java.lang.Object", "java.util.Scanner", "java.lang.Main"], correct: 1 },
+      { q: "Which keyword resolves name ambiguity by referencing the current object's fields inside a constructor context?", options: ["super", "new", "this", "class"], correct: 2 },
+      { q: "Which member option describes a class or interface written entirely inside another outer class wrapper?", options: ["Static Block", "Constructor", "Nested Class", "Method behavioral group"], correct: 2 },
+      { q: "What operator is paired with a class constructor to initialize a completely new object instance on the heap?", options: ["Dot operator (.)", "new keyword", "extends keyword", "Assignment operator (=)"], correct: 1 },
+      { q: "In the provided text metaphor, if a generic Car design plan represents a class, what does a specific Tesla parked in a garage represent?", options: ["An interface blueprint link", "A package module wrapper", "The actual instantiated object", "An abstract static block constructor"], correct: 2 }
+    ];
+
+    /* --- Quiz Element Rendering Pipeline --- */
+    const quizDisplayTarget = document.getElementById('classQuizInjector');
+    classQuizDb.forEach((item, index) => {
+      let qCard = document.createElement('div');
+      qCard.className = 'q-box';
+      
+      let qTitle = document.createElement('div');
+      qTitle.className = 'q-text';
+      qTitle.innerText = `Q${index + 1}: ${item.q}`;
+      qCard.appendChild(qTitle);
+      
+      let optionsContainer = document.createElement('div');
+      
+      item.options.forEach((opt, oIndex) => {
+        let labelRow = document.createElement('label');
+        labelRow.className = 'opt-wrapper';
+        labelRow.innerHTML = `<input type="radio" name="class-q-${index}" value="${oIndex}"> <span>${opt}</span>`;
+        optionsContainer.appendChild(labelRow);
+      });
+      
+      qCard.appendChild(optionsContainer);
+      quizDisplayTarget.appendChild(qCard);
+    });
+
+    /* --- Exam Assessment Grading System --- */
+    function evaluateClassExam() {
+      let finalCalculatedScore = 0;
+      const questionBlocks = document.querySelectorAll('.q-box');
+      
+      classQuizDb.forEach((item, index) => {
+        const selection = document.querySelector(`input[name="class-q-${index}"]:checked`);
+        const block = questionBlocks[index];
+        const uiRows = block.querySelectorAll('.opt-wrapper');
+        
+        // Remove historical feedback markers
+        uiRows.forEach(row => row.classList.remove('feedback-correct', 'feedback-wrong'));
+        
+        if (selection) {
+          let selectedValue = parseInt(selection.value);
+          if (selectedValue === item.correct) {
+            finalCalculatedScore++;
+            uiRows[selectedValue].classList.add('feedback-correct');
+          } else {
+            uiRows[selectedValue].classList.add('feedback-wrong');
+            uiRows[item.correct].classList.add('feedback-correct');
+          }
+        } else {
+          // Highlight correct row to assist the student if left unanswered
+          uiRows[item.correct].classList.add('feedback-correct');
+        }
+      });
+      
+      // Update Performance Dashboard Panel Viewport
+      const scorePanel = document.getElementById('scorePanel');
+      const finalScoreDisplay = document.getElementById('finalScoreDisplay');
+      const txtMsg = document.getElementById('feedbackText');
+      
+      finalScoreDisplay.innerText = `${finalCalculatedScore} / 15`;
+      scorePanel.style.display = 'block';
+      
+      if (finalCalculatedScore >= 12) {
+        txtMsg.innerText = "Fantastic score! You have solid conceptual understanding of Java class properties, inheritance, and encapsulation attributes.";
+      } else if (finalCalculatedScore >= 8) {
+        txtMsg.innerText = "Passed! Review components like constructors and encapsulation blocks to polish your performance.";
+      } else {
+        txtMsg.innerText = "Keep studying! Review the class structure differences between fields and methods and re-submit your test.";
+      }
+      
+      scorePanel.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

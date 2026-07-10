@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java OOP Concepts Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at 80% 20%, rgba(230, 126, 34, 0.25) 0%, transparent 60%),
+                        radial-gradient(circle at 20% 80%, rgba(0, 242, 254, 0.2) 0%, transparent 60%),
+                        url('https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg') no-repeat fixed 85% 60% / 40vw,
+                        #090a10;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+            color: #f4f6f9;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient background floating code/particle systems */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px),
+                radial-gradient(circle, rgba(0, 242, 254, 0.1) 2px, transparent 2px);
+            background-size: 50px 50px, 110px 110px;
+            background-position: 0 0, 30px 30px;
+            animation: backgroundPan 25s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: 'class Object { public static void main } Encapsulation Abstraction Inheritance Polymorphism';
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: rgba(230, 126, 34, 0.04);
+            word-wrap: break-word;
+            line-height: 30px;
+            letter-spacing: 4px;
+            position: absolute;
+            top: -100px; left: 5%; width: 90%; height: 200%;
+            z-index: 0;
+            pointer-events: none;
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+            animation: codeStream 40s linear infinite;
+        }
+
+        @keyframes backgroundPan {
+            from { background-position: 0 0, 30px 30px; }
+            to { background-position: 500px 500px, 710px 710px; }
+        }
+
+        @keyframes codeStream {
+            from { transform: translateY(0); }
+            to { transform: translateY(-30vh); }
+        }
+
+        /* Java Logo Top Left with striking pulse glow */
+        .java-logo {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            width: 55px;
+            height: auto;
+            filter: drop-shadow(0 0 15px rgba(244, 116, 34, 0.8));
+            animation: float 3.5s ease-in-out infinite, glowPulse 2.5s infinite alternate;
+            z-index: 10;
+        }
+
+        /* High energy anime-styled gradient heading text */
+        .heading {
+            text-align: center;
+            color: #ffffff;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 2.9rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #fff 0%, #ff8c00 30%, #00f2fe 70%, #fff 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.5));
+            animation: slideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1), shineText 6s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes shineText {
+            to { background-position: 200% center; }
+        }
+
+        /* Core Overview Card */
+        .content-section {
+            background: rgba(13, 16, 31, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 35px;
+            border-radius: 24px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            max-width: 950px;
+            width: 100%;
+            color: #cdd4e4;
+            line-height: 2;
+            box-sizing: border-box;
+            margin-bottom: 35px;
+            animation: scaleUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+            z-index: 1;
+            transition: border-color 0.4s, box-shadow 0.4s;
+        }
+        
+        .content-section:hover {
+            border-color: rgba(0, 242, 254, 0.3);
+            box-shadow: 0 30px 60px rgba(0, 242, 254, 0.1);
+        }
+
+        .content-section h3 {
+            color: #ff8c00;
+            font-size: 1.65rem;
+            margin-top: 0;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Anime Dashboard Grid Container */
+        .syllabus-nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 32px;
+            background: rgba(10, 12, 22, 0.5);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            box-shadow: 0 35px 70px rgba(0,0,0,0.7), inset 0 1px 2px rgba(255,255,255,0.15);
+            max-width: 950px;
+            width: 100%;
+            box-sizing: border-box;
+            animation: scaleUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+            z-index: 1;
+        }
+
+        .nav-category {
+            grid-column: 1 / -1;
+            color: #00f2fe;
+            font-size: 1.3rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            border-left: 4px solid #ff8c00;
+            padding-left: 12px;
+        }
+
+        .nav-category:first-of-type {
+            margin-top: 0;
+        }
+
+        /* Upgraded High-Contrast Neon Navigation Item Cards */
+        .unit-link {
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: #ffffff;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.3);
+            position: relative;
+            overflow: hidden;
+            background: rgba(255,255,255,0.02);
+            box-sizing: border-box;
+        }
+
+        .unit-id {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: #ff8c00;
+            margin-bottom: 4px;
+            text-shadow: 0 0 10px rgba(255, 140, 0, 0.3);
+        }
+
+        .unit-title {
+            font-weight: 700;
+            font-size: 1.05rem;
+            line-height: 1.4;
+        }
+
+        /* High-speed sweeping slash lens flare effect on interaction */
+        .unit-link::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -150%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transform: skewX(-20deg);
+            transition: 0.5s ease-in-out;
+        }
+        .unit-link:hover::before {
+            left: 150%;
+        }
+
+        /* High-vibrancy Overclocked Anime Theme Edge Borders */
+        .u1 { background: linear-gradient(135deg, rgba(9,10,16,0.8), rgba(20,24,43,0.9)); border: 1px solid rgba(67, 100, 247, 0.3); }
+        .u2 { background: linear-gradient(135deg, rgba(9,10,16,0.8), rgba(20,24,43,0.9)); border: 1px solid rgba(0, 242, 254, 0.3); }
+        .u3 { background: linear-gradient(135deg, rgba(9,10,16,0.8), rgba(20,24,43,0.9)); border: 1px solid rgba(176, 106, 179, 0.3); }
+        .u4 { background: linear-gradient(135deg, rgba(9,10,16,0.8), rgba(20,24,43,0.9)); border: 1px solid rgba(245, 175, 25, 0.3); }
+        .u5 { background: linear-gradient(135deg, rgba(9,10,16,0.8), rgba(20,24,43,0.9)); border: 1px solid rgba(255, 8, 68, 0.3); }
+
+        /* Snappy Kinetic Mechanical Hover Reactions */
+        .unit-link:hover {
+            transform: translateY(-8px) scale(1.03);
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .u1:hover { border-color: #4364f7; box-shadow: 0 15px 30px rgba(67, 100, 247, 0.4); }
+        .u2:hover { border-color: #00f2fe; box-shadow: 0 15px 30px rgba(0, 242, 254, 0.4); }
+        .u3:hover { border-color: #b06ab3; box-shadow: 0 15px 30px rgba(176, 106, 179, 0.4); }
+        .u4:hover { border-color: #f5af19; box-shadow: 0 15px 30px rgba(245, 175, 25, 0.4); }
+        .u5:hover { border-color: #ff0844; box-shadow: 0 15px 30px rgba(255, 8, 68, 0.4); }
+
+        .u1:hover .unit-id { color: #4364f7; }
+        .u2:hover .unit-id { color: #00f2fe; }
+        .u3:hover .unit-id { color: #b06ab3; }
+        .u4:hover .unit-id { color: #f5af19; }
+        .u5:hover .unit-id { color: #ff0844; }
+
+        /* Fluid Motion Frame Transformations */
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scaleUp {
+            from { opacity: 0; transform: translateY(50px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(6deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        @keyframes glowPulse {
+            from { filter: drop-shadow(0 0 10px rgba(244, 116, 34, 0.5)); }
+            to { filter: drop-shadow(0 0 28px rgba(244, 116, 34, 1.1)); }
+        }
+
+        /* Mobile Layout Optimization Updates */
+        @media (max-width: 768px) {
+            .heading { font-size: 2.1rem; margin-top: 65px; letter-spacing: -0.5px; }
+            body { padding: 80px 15px 30px 15px; }
+            .java-logo { width: 48px; top: 15px; left: 15px; }
+            .syllabus-nav { padding: 20px 16px; grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <img class="java-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java Logo">
+
+    <h2 class="heading">Object-Oriented Programming Terminal</h2>
+
+    <div class="content-section">
+        <h3>🪐 Architecture Overview</h3>
+        <p>Object-Oriented Programming (OOP) is a software design paradigm that structures programs around data and behaviors rather than just functions and logic. By grouping these into modular, reusable components, OOP models real-world entities to create scalable and maintainable applications.</p>
+        <p>The core fundamentals and primary topics of OOP are based on the following concepts:</p>
+    </div>
+
+    <nav class="syllabus-nav">
+        <div class="nav-category">Core Building Blocks</div>
+        <a href="class.html" class="unit-link u1" title="Class Blueprint">
+            <span class="unit-id">1.1</span>
+            <span class="unit-title">Class: Blueprint defining attributes & behaviors</span>
+        </a>
+        <a href="object.html" class="unit-link u1" title="Object Instance">
+            <span class="unit-id">1.2</span>
+            <span class="unit-title">Object: Instance representing specific real-world entity</span>
+        </a>
+        <a href="lifecycle.html" class="unit-link u1" title="Constructor & Destructor">
+            <span class="unit-id">1.3</span>
+            <span class="unit-title">Constructor & Destructor: Initialization & Cleanup</span>
+        </a>
+
+        <div class="nav-category">The 4 Pillars of OOP</div>
+        <a href="a1.html" class="unit-link u2" title="Encapsulation Pillar">
+            <span class="unit-id">1.4</span>
+            <span class="unit-title">Encapsulation: Bundling data & access restriction</span>
+        </a>
+        <a href="abstraction.html" class="unit-link u3" title="Abstraction Pillar">
+            <span class="unit-id">1.5</span>
+            <span class="unit-title">Abstraction: Hiding complex implementation details</span>
+        </a>
+        <a href="inheritance.html" class="unit-link u4" title="Inheritance Pillar">
+            <span class="unit-id">1.6</span>
+            <span class="unit-title">Inheritance: Subclassing & code reusability</span>
+        </a>
+        <a href="polymorphism.html" class="unit-link u5" title="Polymorphism Pillar">
+            <span class="unit-id">1.7</span>
+            <span class="unit-title">Polymorphism: Unique execution handling same action</span>
+        </a>
+
+        <div class="nav-category">Advanced Relationships & Principles</div>
+        <a href="association.html" class="unit-link u2" title="Association Dynamics">
+            <span class="unit-id">1.8</span>
+            <span class="unit-title">Association: Independent class interactions</span>
+        </a>
+        <a href="aggregation.html" class="unit-link u3" title="Aggregation & Composition">
+            <span class="unit-id">1.9</span>
+            <span class="unit-title">Aggregation & Composition: Specialized structural unions</span>
+        </a>
+        <a href="coupling-cohesion.html" class="unit-link u4" title="Coupling & Cohesion">
+            <span class="unit-id">1.10</span>
+            <span class="unit-title">Coupling & Cohesion: Connection metrics & class responsibility</span>
+        </a>
+    </nav>
+
+</body>
+</html>

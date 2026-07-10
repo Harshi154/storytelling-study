@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Constructors & Resource Management</title>
+    <style>
+        :root {
+            --primary: #f89820; /* Java Orange */
+            --primary-dark: #e07f10;
+            --secondary: #5382a1; /* Java Blue */
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-index: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Java Object Background effect */
+        body::before {
+            content: "{}";
+            position: fixed;
+            font-size: 40vw;
+            font-weight: bold;
+            color: rgba(248, 152, 32, 0.03);
+            top: 20%;
+            right: -10%;
+            z-index: -1;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* Header Navigation */
+        header {
+            background-color: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Java Style Icon */
+        .java-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 0 15px rgba(248, 152, 32, 0.5);
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo-text span {
+            color: var(--primary);
+        }
+
+        /* Main Layout */
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        h1, h2, h3 {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        h1 { font-size: 2.5rem; text-align: center; color: var(--primary); }
+        h2 { font-size: 1.8rem; border-left: 4px solid var(--primary); padding-left: 10px; margin-top: 1rem;}
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        ul {
+            list-style-type: none;
+            margin-bottom: 1.5rem;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 0.8rem;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        ul li::before {
+            content: "⚡";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background-color: rgba(15, 23, 42, 0.6);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        th {
+            background-color: var(--secondary);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: rgba(248, 152, 32, 0.05);
+        }
+
+        /* Video Section */
+        .video-box {
+            text-align: center;
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 2px dashed var(--primary);
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(248, 152, 32, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(248, 152, 32, 0.5);
+        }
+
+        .video-container {
+            display: none;
+            margin-top: 1.5rem;
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Quiz Styling */
+        .quiz-header {
+            text-align: center;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .question-block {
+            background-color: rgba(15, 23, 42, 0.4);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .options-group {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            background-color: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: rgba(255,255,255,0.08);
+        }
+
+        .option-label input[type="radio"] {
+            accent-color: var(--primary);
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Results Display */
+        .result-box {
+            display: none;
+            margin-top: 2rem;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            background-color: rgba(16, 185, 129, 0.2);
+            border: 2px solid var(--success);
+        }
+
+        .correct-ans {
+            border: 2px solid var(--success) !important;
+            background-color: rgba(16, 185, 129, 0.1) !important;
+        }
+        
+        .wrong-ans {
+            border: 2px solid #ef4444 !important;
+            background-color: rgba(239, 68, 68, 0.1) !important;
+        }
+
+        .center-btn-wrapper {
+            text-align: center;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <div class="java-icon">☕</div>
+            <div class="logo-text">Java<span>Academy</span></div>
+        </div>
+    </header>
+
+    <main>
+        <h1 style="margin-bottom: 2rem;">Java Constructors & Resource Management</h1>
+
+        <section class="card">
+            <h2>Introduction</h2>
+            <p>In Java, <strong>constructors</strong> are special methods used to initialize a newly created object's state. Conversely, Java does not have explicit destructors like C++; instead, it relies on an automatic <strong>Garbage Collector</strong> to deallocate memory and manage resources automatically.</p>
+        </section>
+
+        <section class="card">
+            <h2>Java Constructors</h2>
+            <p>A constructor is a block of code similar to a method that is automatically called when an instance of a class is created using the <code>new</code> keyword.</p>
+            
+            <h3>Properties of Constructors</h3>
+            <ul>
+                <li><strong>Matching Name:</strong> The constructor name must exactly match the class name.</li>
+                <li><strong>No Return Type:</strong> They do not have any return type, not even void.</li>
+                <li><strong>Automatic Invocation:</strong> Triggered implicitly at the exact moment an object is instantiated.</li>
+                <li><strong>Modifiers:</strong> Cannot be declared as static, final, abstract, or synchronized.</li>
+                <li><strong>Access Specifiers:</strong> Can use public, protected, default, or private visibility.</li>
+                <li><strong>Constructor Overloading:</strong> A class can have multiple constructors if they have different parameter lists.</li>
+                <li><strong>Constructor Chaining:</strong> One constructor can call another in the same class using <code>this()</code> as its first statement.</li>
+            </ul>
+
+            <h3>Types of Constructors</h3>
+            <ul>
+                <li><strong>Default Constructor:</strong> Automatically generated by the Java compiler if you do not write any constructor. It initializes numeric variables to 0 and object references to null.</li>
+                <li><strong>Parameterized Constructor:</strong> Explicitly written to accept arguments, allowing you to assign custom values to an object's fields at creation time.</li>
+                <li><strong>Copy Constructor:</strong> Though not built-in, developers can write a constructor that accepts an object of the same class to clone its values.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>Java "Destructors" & Resource Management</h2>
+            <p>Languages like C++ require explicit destructors (<code>~ClassName()</code>) to free memory manually. Java avoids this risky syntax through automated lifecycles.</p>
+
+            <h3>Properties of Resource Management in Java</h3>
+            <ul>
+                <li><strong>Automatic Management:</strong> The Java Virtual Machine (JVM) tracks object references. It reclaims memory automatically when an object is no longer reachable.</li>
+                <li><strong>Non-Deterministic:</strong> Developers cannot accurately predict exactly when the Garbage Collector will run.</li>
+                <li><strong>Deprecated Finalizers:</strong> The <code>finalize()</code> method was historically used for cleanup before an object was destroyed. It has been fully removed as of modern Java versions due to performance and safety issues.</li>
+                <li><strong>Modern Alternative:</strong> To clean up external resources like files or database connections, Java uses the <code>AutoCloseable</code> interface alongside a <strong>try-with-resources</strong> block.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>Quick Comparison</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Constructor</th>
+                        <th>Destructor / Garbage Collector</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Purpose</strong></td>
+                        <td>Initializes object state.</td>
+                        <td>Reclaims memory and resources.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Syntax</strong></td>
+                        <td><code>ClassName()</code></td>
+                        <td>Handled implicitly by the JVM.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Invocation</strong></td>
+                        <td>Called explicitly using <code>new</code>.</td>
+                        <td>Triggered automatically by the Garbage Collector.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Overloading</strong></td>
+                        <td>Fully supported.</td>
+                        <td>Not applicable in Java.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="card video-box">
+            <h2>Deep Dive Practical Video</h2>
+            <p>Click below to open and watch a comprehensive Java guide on constructors and garbage collection handling.</p>
+            <button class="btn" onclick="playVideo()">▶ Click to Play Video</button>
+            
+            <div class="video-container" id="videoContainer">
+                <iframe id="videoPlayer" src="" title="Java Programming Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="quiz-header">
+                <h2>🎓 Java Grand Test</h2>
+                <p>Test your knowledge on Constructors, Lifecycles, and Resource Management. (15 Questions)</p>
+            </div>
+
+            <form id="quizForm">
+                <div id="quizQuestions"></div>
+
+                <div class="center-btn-wrapper">
+                    <button type="button" class="btn" onclick="gradeQuiz()">Submit Answers</button>
+                </div>
+            </form>
+
+            <div class="result-box" id="resultBox"></div>
+        </section>
+    </main>
+
+    <script>
+        // Interactive Video Functionality
+        function playVideo() {
+            var container = document.getElementById('videoContainer');
+            var player = document.getElementById('videoPlayer');
+            // Sample quality free tutorial video link
+            player.src = "https://www.youtube.com/embed/A74TOX803D0?autoplay=1";
+            container.style.display = "block";
+        }
+
+        // Quiz Question bank definition
+        const questions = [
+            { q: "What is the primary purpose of a Java constructor?", o: ["To destroy an object", "To initialize a newly created object's state", "To copy variables globally", "To run garbage collection"], a: 1 },
+            { q: "Which of the following is true about a constructor's return type?", o: ["It must return void", "It must return an int", "It has no return type, not even void", "It returns a reference to the class"], a: 2 },
+            { q: "The constructor name must exactly match which of the following?", o: ["The method name", "The package name", "The class name", "The variable instance name"], a: 2 },
+            { q: "When is a constructor implicitly triggered?", o: ["When the program finishes executing", "At the exact moment an object is instantiated", "When the garbage collector runs", "When the class is imported"], a: 1 },
+            { q: "Which modifier CANNOT be applied to a constructor?", o: ["public", "private", "static", "protected"], a: 2 },
+            { q: "What happens if you do not explicitly define a constructor in a class?", o: ["The code will fail to compile", "A runtime error occurs", "Java automatically generates a default constructor", "The object fields remain unallocated"], a: 2 },
+            { q: "A default constructor initializes numeric object variables to what value?", o: ["null", "0", "1", "-1"], a: 1 },
+            { q: "What is constructor overloading?", o: ["Calling a constructor too many times", "Having multiple constructors with different parameter lists", "Inheriting constructors from a parent class", "Creating objects without constructors"], a: 1 },
+            { q: "Which keyword is used to chain one constructor to another in the same class?", o: ["super()", "new", "this()", "extends"], a: 2 },
+            { q: "Does Java have explicit destructors like C++?", o: ["Yes, called ~ClassName()", "No, it relies on automatic Garbage Collection", "Yes, using the clean keyword", "Only in legacy versions"], a: 1 },
+            { q: "What handles memory reclamation in Java automatically?", o: ["The Compiler", "The Destructor Method", "The Java Virtual Machine Garbage Collector", "The main method"], a: 2 },
+            { q: "Can you accurately predict when the Garbage Collector will run?", o: ["Yes, every 5 seconds", "Yes, using System.gc() precisely", "No, it is non-deterministic", "Yes, when an object block ends"], a: 2 },
+            { q: "What has happened to the finalize() method in modern Java versions?", o: ["It has been fully removed / deprecated", "It is now mandatory for cleanup", "It replaces constructors", "It was renamed to clean()"], a: 0 },
+            { q: "What is the recommended modern approach to clean up resources like files in Java?", o: ["Using a finalize block", "Using destructor syntax", "Using try-with-resources with AutoCloseable", "Rebooting the JVM"], a: 2 },
+            { q: "A default constructor initializes Object references to which default value?", o: ["0", "void", "false", "null"], a: 3 }
+        ];
+
+        // Generate Quiz UI dynamically
+        const quizContainer = document.getElementById('quizQuestions');
+        questions.forEach((item, index) => {
+            let qHtml = `
+                <div class="question-block" id="q-block-${index}">
+                    <div class="question-text">${index + 1}. ${item.q}</div>
+                    <div class="options-group">
+            `;
+            item.o.forEach((opt, oIdx) => {
+                qHtml += `
+                    <label class="option-label" id="label-${index}-${oIdx}">
+                        <input type="radio" name="question-${index}" value="${oIdx}">
+                        ${opt}
+                    </label>
+                `;
+            });
+            qHtml += `</div></div>`;
+            quizContainer.innerHTML += qHtml;
+        });
+
+        // Grading Logic
+        function gradeQuiz() {
+            let score = 0;
+            
+            questions.forEach((item, index) => {
+                const selected = document.querySelector(`input[name="question-${index}"]:checked`);
+                const qBlock = document.getElementById(`q-block-${index}`);
+                
+                // Clear any previous color stylings
+                for(let i=0; i<item.o.length; i++) {
+                    document.getElementById(`label-${index}-${i}`).classList.remove('correct-ans', 'wrong-ans');
+                }
+
+                if (selected) {
+                    const answerVal = parseInt(selected.value);
+                    if (answerVal === item.a) {
+                        score++;
+                        document.getElementById(`label-${index}-${item.a}`).classList.add('correct-ans');
+                    } else {
+                        document.getElementById(`label-${index}-${answerVal}`).classList.add('wrong-ans');
+                        document.getElementById(`label-${index}-${item.a}`).classList.add('correct-ans');
+                    }
+                } else {
+                    // Unanswered gets marked with correct answer displayed
+                    document.getElementById(`label-${index}-${item.a}`).classList.add('correct-ans');
+                }
+            });
+
+            // Display Results
+            const resultBox = document.getElementById('resultBox');
+            resultBox.innerHTML = `Test Completed!<br>Your Score: ${score} / ${questions.length} (${Math.round((score/questions.length)*100)}%)`;
+            resultBox.style.display = "block";
+            resultBox.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

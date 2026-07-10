@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java OOP: Encapsulation Lesson</title>
+    <style>
+        :root {
+            --primary: #5382a1;
+            --secondary: #f89820;
+            --dark: #2b2b2b;
+            --light: #f4f6f9;
+            --white: #ffffff;
+            --success: #2e7d32;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #1a1a24;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Floating Java Objects Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-object {
+            position: absolute;
+            background: rgba(83, 130, 161, 0.05);
+            border: 2px solid rgba(248, 152, 32, 0.1);
+            border-radius: 12px;
+            padding: 10px 20px;
+            color: rgba(255, 255, 255, 0.05);
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 1.2rem;
+            animation: float Up 12s infinite linear;
+            bottom: -100px;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Assigning random positions and delays for background elements */
+        .obj1 { left: 10%; animation-duration: 14s; animation-delay: 0s; }
+        .obj2 { left: 30%; animation-duration: 18s; animation-delay: 3s; }
+        .obj3 { left: 55%; animation-duration: 16s; animation-delay: 1s; }
+        .obj4 { left: 75%; animation-duration: 20s; animation-delay: 5s; }
+        .obj5 { left: 85%; animation-duration: 12s; animation-delay: 2s; }
+
+        /* Navbar & Header */
+        header {
+            background-color: rgba(43, 43, 43, 0.95);
+            padding: 15px 5%;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid var(--secondary);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .java-icon {
+            width: 45px;
+            height: 45px;
+            margin-right: 15px;
+            background: #fff;
+            border-radius: 50%;
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .java-icon svg {
+            width: 35px;
+            height: 35px;
+        }
+
+        header h1 {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* Container & Sections */
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        section {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--light);
+            padding-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #4a4a4a;
+        }
+
+        ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* Code Block Styling */
+        pre {
+            background: #2d3748;
+            color: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            margin: 20px 0;
+            border-left: 5px solid var(--secondary);
+        }
+
+        .comment { color: #718096; }
+        .keyword { color: #f6ad55; }
+        .type { color: #63b3ed; }
+
+        /* Video Section */
+        .video-container {
+            text-align: center;
+            padding: 30px;
+            background: #eef2f7;
+            border-radius: 12px;
+            border: 2px dashed var(--primary);
+        }
+
+        .video-btn {
+            background-color: var(--secondary);
+            color: var(--white);
+            border: none;
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 10px rgba(248, 152, 32, 0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .video-btn:hover {
+            background-color: #e08613;
+            transform: translateY(-2px);
+        }
+
+        .video-player-wrapper {
+            display: none;
+            margin-top: 20px;
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .video-player-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Quiz Styling */
+        .quiz-title {
+            color: var(--secondary);
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+        }
+
+        .question-card {
+            background: #fdfdfd;
+            border: 1px solid #e2e8f0;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            transition: border-color 0.3s;
+        }
+
+        .question-card:hover {
+            border-color: var(--primary);
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .options-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .option-item {
+            margin-bottom: 10px;
+        }
+
+        .option-item label {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: var(--light);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .option-item label:hover {
+            background: #e2e8f0;
+        }
+
+        .option-item input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+            accent-color: var(--primary);
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 18px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: background 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: #416781;
+        }
+
+        /* Results Display */
+        #result-box {
+            display: none;
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .success-box {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #a5d6a7;
+        }
+
+        .correct-answer {
+            background-color: #e8f5e9 !important;
+            border: 1px solid #a5d6a7 !important;
+            color: #2e7d32;
+        }
+
+        .wrong-answer {
+            background-color: #ffebee !important;
+            border: 1px solid #ef9a9a !important;
+            color: #c62828;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animation">
+        <div class="floating-object obj1">class Object {}</div>
+        <div class="floating-object obj2">private String data;</div>
+        <div class="floating-object obj3">public get()</div>
+        <div class="floating-object obj4">setBalance()</div>
+        <div class="floating-object obj5">this.lock = true;</div>
+    </div>
+
+    <header>
+        <div class="java-icon">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                <path d="M35.4,32.2c0.4-1.4,1.1-2.7,1.8-4c1.1-2.1,0.7-3.6-1.3-4.2c-2.4-0.7-4.9-0.8-7.3-0.4c-1,.2-1.9,.6-2.9,.8c-1.4,.4-2.8,.7-4.2,.8c-3.1,.2-6.1-.5-9-1.8c-.8-.4-1.5-.9-2.1-1.5c-.7-.7-.9-1.6-.3-2.4c.5-.7,1.4-1,2.3-1.1c4.5-.4,8.9,.5,13.2,1.9c1,.3,2.1,.6,3.1,.8c1.6,.2,3.1,0,4.6-.6c.9-.4,1.7-1,2.4-1.7c.9-1,1-2.1,.1-3.1c-.8-.9-1.9-1.5-3.1-1.8c-2.9-.8-5.9-.8-8.9-.4c-3.6,.5-7,1.7-10.3,3.3c-2.8,1.4-5.2,3.3-6.9,6c-1.6,2.5-1.9,5.2-1,8.1c.9,2.8,2.7,4.9,5.2,6.5c3.7,2.3,7.9,3.3,12.2,3.5c4.7,.2,9.3-.6,13.7-2.4c1-.4,1.9-1,2.8-1.6C34.4,33.9,35,33.1,35.4,32.2z" fill="#f89820"/>
+                <path d="M26.2,12.7c.3-1,.6-2,.8-3.1c.2-.9-.1-1.5-.9-1.9c-.8-.4-1.5-.1-1.9,.7c-.6,1.4-1.2,2.8-1.8,4.2c-.3,.7-.3,1.3,.1,1.9c.4,.6,1,.9,1.7,.8C24.9,15.1,25.6,14,26.2,12.7z" fill="#5382a1"/>
+                <path d="M29.5,9.2c.4-1,.7-2,1-3c.3-1,0-1.6-.8-2c-.8-.4-1.5-.2-1.9,.7c-.7,1.6-1.4,3.2-2,4.8c-.3,.7-.2,1.4,.2,1.9c.4,.5,1.1,.8,1.8,.6C27.9,12,28.8,10.7,29.5,9.2z" fill="#5382a1"/>
+            </svg>
+        </div>
+        <h1>Java Architecture Academy</h1>
+    </header>
+
+    <div class="container">
+        
+        <section>
+            <h2>Understanding Encapsulation</h2>
+            <p><strong>Encapsulation</strong> in Java is the object-oriented programming principle of wrapping data (variables) and code (methods) together into a single unit, usually a class, while restricting direct access to the internal state. Think of it like a medical capsule; the capsule contains multiple chemical ingredients (data and logic) but keeps them hidden and safe inside a single protective outer shell.</p>
+            
+            <h3>How Encapsulation is Achieved</h3>
+            <p>To fully implement encapsulation in Java, you must follow two primary steps:</p>
+            <ul>
+                <li><strong>Declare variables as private:</strong> This achieves data hiding by ensuring variables cannot be accessed or manipulated directly from outside the class.</li>
+                <li><strong>Provide public getter and setter methods:</strong> These methods serve as the controlled entry and exit points to safely view or modify the private variables.</li>
+            </ul>
+
+            <p>Here is a practical code example illustrating the principle:</p>
+<pre><span class="keyword">public class</span> <span class="type">BankAccount</span> {
+    <span class="comment">// 1. Data Hiding: Private variables cannot be accessed directly</span>
+    <span class="keyword">private double</span> balance;
+
+    <span class="comment">// 2. Controlled Modification: Setter with validation logic</span>
+    <span class="keyword">public void</span> deposit(<span class="keyword">double</span> amount) {
+        <span class="keyword">if</span> (amount > 0) { <span class="comment">// Ensures data integrity</span>
+            <span class="keyword">this</span>.balance += amount;
+        }
+    }
+
+    <span class="comment">// 3. Controlled Access: Getter to safely read internal state</span>
+    <span class="keyword">public double</span> getBalance() {
+        <span class="keyword">return this</span>.balance;
+    }
+}</pre>
+
+            <h3>Core Properties and Advantages</h3>
+            <ul>
+                <li><strong>Data Hiding:</strong> External classes remain unaware of how data is stored or structurally represented inside the class.</li>
+                <li><strong>Access Control:</strong> You can easily make a class field read-only (by providing only a getter) or write-only (by providing only a setter).</li>
+                <li><strong>Data Integrity:</strong> Setter methods can contain validation logic to reject invalid data, such as stopping a negative value from being applied to a bank balance or age.</li>
+                <li><strong>Code Flexibility:</strong> Internal implementation details can be heavily modified without breaking external programs that rely on your class methods.</li>
+                <li><strong>Modularity and Decoupling:</strong> Code becomes highly modular because components are cleanly divided into independent units that can be developed and tested concurrently.</li>
+            </ul>
+        </section>
+
+        <section class="video-container">
+            <h2>Visual Learning Core</h2>
+            <p style="margin-bottom: 20px;">Ready to see encapsulation running step-by-step in an IDE? Press the button below to load the video tutorial resource.</p>
+            <button class="video-btn" onclick="toggleVideo()">▶ Watch Video Lesson</button>
+            
+            <div class="video-player-wrapper" id="videoWrapper">
+                <iframe src="https://www.youtube.com/embed/z16sSbeE-I0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section id="quiz-section">
+            <h2 class="quiz-title">Encapsulation Grand Test</h2>
+            <form id="quizForm">
+                <div id="questions-container"></div>
+                
+                <button type="button" class="submit-btn" onclick="evaluateQuiz()">Submit Assessment</button>
+            </form>
+
+            <div id="result-box" class="success-box"></div>
+        </section>
+    </div>
+
+    <script>
+        // Toggle Video Embed Visibility
+        function toggleVideo() {
+            const wrapper = document.getElementById('videoWrapper');
+            if(wrapper.style.display === 'block') {
+                wrapper.style.display = 'none';
+            } else {
+                wrapper.style.display = 'block';
+            }
+        }
+
+        // Quiz Question Dataset
+        const quizQuestions = [
+            { q: "What is the primary metaphor used to describe encapsulation?", a: ["A blueprint", "A medical capsule", "A transmission tower", "A window pane"], c: 1 },
+            { q: "Which keyword is primarily applied to variables to achieve data hiding?", a: ["public", "protected", "private", "transient"], c: 2 },
+            { q: "What methods serve as controlled entry points to view private variables?", a: ["Constructors", "Getters", "Setters", "Destructors"], c: 1 },
+            { q: "What methods serve as controlled exit points to modify private variables safely?", a: ["Getters", "Setters", "Static methods", "Helpers"], c: 2 },
+            { q: "Encapsulation combines data variables and ______ into a single class unit.", a: ["Objects", "Methods/Code", "Packages", "Compilers"], c: 1 },
+            { q: "How do you make an encapsulated variable completely read-only?", a: ["Provide only a setter", "Provide only a getter", "Omit both getter and setter", "Declare it transient"], c: 1 },
+            { q: "Adding data verification checks inside a setter preserves what core trait?", a: ["Data Integrity", "Polymorphism", "Inheritance Speed", "Garbage Collection"], c: 0 },
+            { q: "Which modifier allows data access within the same package and subclasses only?", a: ["private", "public", "protected", "default"], c: 2 },
+            { q: "Does encapsulation prevent code modifications from breaking outside integrations?", a: ["No, it makes code more fragile", "Yes, by isolating internal structural shifts", "Only if the class is marked abstract", "Only for integer fields"], c: 1 },
+            { q: "What is a main benefit of separating architecture into independent structural units?", a: ["Modularity and Decoupling", "Faster CPU register use", "Automatic memory allocation", "Loop optimization"], c: 0 },
+            { q: "Which component cannot be declared directly private inside a standard package structure?", a: ["Instance Variable", "Top-level Class", "Inner Method", "Inner Class"], c: 1 },
+            { q: "What feature do setters possess that direct variable modifications lack?", opacity: "Validation logic injection", a: ["Faster compilation loops", "Automatic type casting", "Validation logic checking capabilities", "Pointer redirection functionality"], c: 2 },
+            { q: "When variables are hidden from outside access, it is fundamentally called:", a: ["Overriding", "Data Hiding", "Abstraction layer binding", "Compile-time safety"], c: 1 },
+            { q: "To bind structural rules cleanly, fields are set private while accessor paths are set:", a: ["private", "protected", "public", "volatile"], c: 2 },
+            { q: "Which statement is true concerning well-encapsulated code structures?", a: ["Fields are public", "Methods cannot accept parameter bounds", "It decouples interface implementations from data structures", "It eliminates the need for constructors"], c: 2 }
+        ];
+
+        // Build Quiz HTML dynamically
+        const container = document.getElementById('questions-container');
+        quizQuestions.forEach((item, index) => {
+            let card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `q-card-${index}`;
+            
+            let qText = document.createElement('div');
+            qText.className = 'question-text';
+            qText.innerText = `${index + 1}. ${item.q}`;
+            card.appendChild(qText);
+
+            let optionsList = document.createElement('ul');
+            optionsList.className = 'options-list';
+
+            item.a.forEach((opt, optIdx) => {
+                let li = document.createElement('li');
+                li.className = 'option-item';
+                li.innerHTML = `
+                    <label id="label-${index}-${optIdx}">
+                        <input type="radio" name="question-${index}" value="${optIdx}">
+                        ${opt}
+                    </label>
+                `;
+                optionsList.appendChild(li);
+            });
+
+            card.appendChild(optionsList);
+            container.appendChild(card);
+        });
+
+        // Evaluate Quiz Response Scores
+        function evaluateQuiz() {
+            let score = 0;
+            
+            quizQuestions.forEach((item, index) => {
+                const selectedInput = document.querySelector(`input[name="question-${index}"]:checked`);
+                const card = document.getElementById(`q-card-${index}`);
+                
+                // Clear any previous color markings
+                item.a.forEach((_, optIdx) => {
+                    document.getElementById(`label-${index}-${optIdx}`).className = '';
+                });
+
+                if (selectedInput) {
+                    const answeredIdx = parseInt(selectedInput.value);
+                    if (answeredIdx === item.c) {
+                        score++;
+                        document.getElementById(`label-${index}-${item.c}`).className = 'correct-answer';
+                    } else {
+                        document.getElementById(`label-${index}-${answeredIdx}`).className = 'wrong-answer';
+                        document.getElementById(`label-${index}-${item.c}`).className = 'correct-answer';
+                    }
+                } else {
+                    // Missed answer highlight correct one
+                    document.getElementById(`label-${index}-${item.c}`).className = 'correct-answer';
+                }
+            });
+
+            // Display Score Card Window
+            const resultBox = document.getElementById('result-box');
+            resultBox.style.display = 'block';
+            resultBox.innerHTML = `Assessment Complete!<br>Your Score: ${score} / ${quizQuestions.length} (${Math.round((score/quizQuestions.length)*100)}%)`;
+            window.scrollTo({ top: resultBox.offsetTop + 200, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
