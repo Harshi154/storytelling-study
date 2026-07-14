@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java OOP Ultimate Quiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styling & Dark Theme */
+        :root {
+            --bg-color: #0d0d13;
+            --card-bg: #161622;
+            --accent-color: #f89820; /* Java Orange */
+            --accent-glow: #5382a1; /* Java Blue */
+            --text-color: #f1f1f1;
+            --correct-color: #2ec4b6;
+            --wrong-color: #e71d36;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background with Java Image and Black Overlay */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            /* Added high-quality programming/Java background with a dark radial blend */
+            background: radial-gradient(circle at center, rgba(13, 13, 19, 0.85) 0%, #0d0d13 100%), 
+                        url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .bg-bubble {
+            position: absolute;
+            bottom: -100px;
+            color: rgba(248, 152, 32, 0.05);
+            font-size: 4rem;
+            animation: floatUp 15s infinite linear;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.15;
+            }
+            90% {
+                opacity: 0.15;
+            }
+            100% {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Top Bar & Java Icon */
+        .top-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 10;
+        }
+
+        .java-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-color);
+            text-shadow: 0 0 10px rgba(83, 130, 161, 0.5);
+            animation: pulse 2s infinite alternate;
+        }
+
+        .java-logo i {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            filter: drop-shadow(0 0 8px rgba(248, 152, 32, 0.6));
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.03); }
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 700px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 
+                        0 0 20px rgba(83, 130, 161, 0.15);
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-glow), var(--accent-color));
+            transition: width 0.4s ease;
+            box-shadow: 0 0 10px var(--accent-color);
+        }
+
+        .question-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .category-tag {
+            background: rgba(248, 152, 32, 0.1);
+            color: var(--accent-color);
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(248, 152, 32, 0.2);
+        }
+
+        .question-text {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        /* Options styling */
+        .options-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 1rem;
+            color: var(--text-color);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .option-btn:hover:not([disabled]) {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent-glow);
+            transform: translateX(5px);
+            box-shadow: 0 0 10px rgba(83, 130, 161, 0.2);
+        }
+
+        .option-btn:active:not([disabled]) {
+            transform: scale(0.98);
+        }
+
+        /* Answer feedback states */
+        .option-btn.correct {
+            background: rgba(46, 196, 182, 0.15) !important;
+            border-color: var(--correct-color) !important;
+            color: var(--correct-color);
+            font-weight: bold;
+            box-shadow: 0 0 15px rgba(46, 196, 182, 0.3);
+        }
+
+        .option-btn.wrong {
+            background: rgba(231, 29, 54, 0.15) !important;
+            border-color: var(--wrong-color) !important;
+            color: var(--wrong-color);
+            box-shadow: 0 0 15px rgba(231, 29, 54, 0.3);
+        }
+
+        /* Navigation elements */
+        .footer-controls {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .next-btn {
+            background: linear-gradient(135deg, var(--accent-glow), var(--accent-color));
+            color: #000;
+            font-weight: bold;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(248, 152, 32, 0.4);
+            display: none; /* Hidden until answer is selected */
+        }
+
+        .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(248, 152, 32, 0.6);
+        }
+
+        /* Results Screen */
+        .results-card {
+            text-align: center;
+            display: none;
+        }
+
+        .results-card h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+
+        .score-display {
+            font-size: 4rem;
+            font-weight: 800;
+            margin: 20px 0;
+            color: var(--text-color);
+            text-shadow: 0 0 20px rgba(83, 130, 161, 0.5);
+        }
+
+        .restart-btn {
+            background: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .restart-btn:hover {
+            background: var(--accent-color);
+            color: #000;
+            box-shadow: 0 0 15px var(--accent-color);
+        }
+
+        /* Utility classes */
+        .hide { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animation" id="bg-animation"></div>
+
+    <div class="top-bar">
+        <div class="java-logo">
+            <i class="fab fa-java"></i>
+            <span>Java OOP Quiz Master</span>
+        </div>
+    </div>
+
+    <div class="quiz-container" id="quiz-card">
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        
+        <div class="question-meta">
+            <span>Question <span id="current-q-num">1</span> of 40</span>
+            <span class="category-tag" id="category-tag">Abstraction</span>
+        </div>
+
+        <div class="question-text" id="question-text">
+            Loading question...
+        </div>
+
+        <div class="options-list" id="options-container">
+            </div>
+
+        <div class="footer-controls">
+            <button class="next-btn" id="next-btn">Next <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <div class="quiz-container results-card" id="results-card">
+        <h2>Quiz Completed!</h2>
+        <p>Great effort! Here is how you performed in Java OOP Core concepts:</p>
+        <div class="score-display"><span id="correct-score">0</span> / 40</div>
+        <p id="feedback-message" style="margin-bottom: 25px; color: #aaa;"></p>
+        <button class="restart-btn" id="restart-btn"><i class="fas fa-undo"></i> Try Again</button>
+    </div>
+
+    <script>
+        // --- 40 UNIQUE OOP QUESTIONS DATA ---
+        const quizData = [
+            // ABSTRACTION (1-6)
+            {
+                q: "What is abstraction in Java?",
+                options: ["Hiding internal implementation details and showing only functionality", "Creating multiple methods with the same name", "Deriving a child class from a parent class", "Storing data in index formats"],
+                correct: 0,
+                cat: "Abstraction"
+            },
+            {
+                q: "Which of the following cannot be used to instantiate an object?",
+                options: ["A concrete class", "An abstract class", "A subclass", "None of the above"],
+                correct: 1,
+                cat: "Abstraction"
+            },
+            {
+                q: "Can an abstract class have constructors in Java?",
+                options: ["No, abstract classes cannot have constructors", "Yes, they are called when a subclass instance is created", "Yes, but they must be declared private", "No, they can only have static blocks"],
+                correct: 1,
+                cat: "Abstraction"
+            },
+            {
+                q: "How can 100% abstraction be achieved in Java?",
+                options: ["By using abstract classes", "By using Interfaces", "By using Final classes", "By using Encapsulated classes"],
+                correct: 1,
+                cat: "Abstraction"
+            },
+            {
+                q: "Which keyword is used to implement an interface?",
+                options: ["extends", "implements", "inherits", "import"],
+                correct: 1,
+                cat: "Abstraction"
+            },
+            {
+                q: "Can abstract methods have a body inside an abstract class?",
+                options: ["Yes, always", "No, they must end with a semicolon", "Only if marked static", "Only if marked default"],
+                correct: 1,
+                cat: "Abstraction"
+            },
+
+            // OBJECT (7-12)
+            {
+                q: "What is an Object in Java?",
+                options: ["A blueprint of data", "An instance of a class having a state and behavior", "A data type to store sequence tables", "A compiler utility tool"],
+                correct: 1,
+                cat: "Object"
+            },
+            {
+                q: "Which operator is used to dynamic-allocate memory for an object?",
+                options: ["malloc", "alloc", "new", "create"],
+                correct: 2,
+                cat: "Object"
+            },
+            {
+                q: "Where are objects stored in Java memory?",
+                options: ["Stack Memory", "Heap Memory", "Class Area", "Register Area"],
+                correct: 1,
+                cat: "Object"
+            },
+            {
+                q: "What is the default value of an object reference variable in Java?",
+                options: ["void", "0", "null", "undefined"],
+                correct: 2,
+                cat: "Object"
+            },
+            {
+                q: "Which class is the superclass of all classes in Java?",
+                options: ["String", "System", "Object", "Class"],
+                correct: 2,
+                cat: "Object"
+            },
+            {
+                q: "What does the 'clone()' method of the Object class do?",
+                options: ["Deletes an object", "Creates and returns a copy of the object", "Compares two objects", "Serializes the object"],
+                correct: 1,
+                cat: "Object"
+            },
+
+            // CLASS (13-18)
+            {
+                q: "What is a Class in Java?",
+                options: ["A primitive data type", "A template or blueprint that defines objects of the same type", "An instance of an interface", "An execution thread"],
+                correct: 1,
+                cat: "Class"
+            },
+            {
+                q: "Which of these access modifiers makes a class member visible only within its own class?",
+                options: ["public", "protected", "private", "default"],
+                correct: 2,
+                cat: "Class"
+            },
+            {
+                q: "Can a Java file contain multiple public classes?",
+                options: ["Yes, any number of public classes", "No, at most only one public class is allowed", "Only if they are nested", "Yes, if they belong to different packages"],
+                correct: 1,
+                cat: "Class"
+            },
+            {
+                q: "What is the name of a constructor in a class?",
+                options: ["It must be 'init'", "It must have the exact same name as the class", "It can be any name of your choice", "It must be 'constructor'"],
+                correct: 1,
+                cat: "Class"
+            },
+            {
+                q: "What is a nested class in Java?",
+                options: ["A class containing only static methods", "A class defined inside another class", "A subclass of an abstract class", "An inherited class"],
+                correct: 1,
+                cat: "Class"
+            },
+            {
+                q: "Which keyword is used to prevent class inheritance?",
+                options: ["static", "final", "abstract", "const"],
+                correct: 1,
+                cat: "Class"
+            },
+
+            // LIFECYCLE (19-23)
+            {
+                q: "What is the correct sequence of phases in a Java class lifecycle?",
+                options: ["Loading -> Linking -> Initialization", "Initialization -> Loading -> Execution", "Linking -> Compilation -> Garbage Collection", "Creation -> Execution -> Compilation"],
+                correct: 0,
+                cat: "Lifecycle"
+            },
+            {
+                q: "Which Java component is responsible for destroying unreferenced objects?",
+                options: ["JVM compiler", "Class Loader", "Garbage Collector", "Memory Allocator"],
+                correct: 2,
+                cat: "Lifecycle"
+            },
+            {
+                q: "Which method is invoked right before an object is garbage collected?",
+                options: ["delete()", "finalize()", "destroy()", "exit()"],
+                correct: 1,
+                cat: "Lifecycle"
+            },
+            {
+                q: "When does an object become eligible for Garbage Collection?",
+                options: ["When it has no active references to it", "When the program exits the main thread", "When memory space drops below 10%", "Immediately after constructor execution"],
+                correct: 0,
+                cat: "Lifecycle"
+            },
+            {
+                q: "How can you explicitly suggest JVM to run the Garbage Collector?",
+                options: ["System.gc()", "Runtime.clear()", "Object.finalize()", "System.clean()"],
+                correct: 0,
+                cat: "Lifecycle"
+            },
+
+            // POLYMORPHISM (24-29)
+            {
+                q: "What is Polymorphism in Java?",
+                options: ["The ability of an object to take on many forms", "Hiding variables inside a class", "Connecting multiple classes via a database", "Running tasks concurrently"],
+                correct: 0,
+                cat: "Polymorphism"
+            },
+            {
+                q: "Which of the following is an example of Compile-time (static) Polymorphism?",
+                options: ["Method Overriding", "Method Overloading", "Dynamic Binding", "Interface Implementation"],
+                correct: 1,
+                cat: "Polymorphism"
+            },
+            {
+                q: "Method Overriding requires...",
+                options: ["Methods to have different names in the same class", "Methods to have the same signature and return type in parent & child classes", "Methods with the same name but different parameters in the same class", "Private access modifiers always"],
+                correct: 1,
+                cat: "Polymorphism"
+            },
+            {
+                q: "Can you override a static method in Java?",
+                options: ["Yes, static methods behave just like instance methods", "No, static methods are resolved at compile time and cannot be overridden", "Only if the child class uses the override keyword", "Yes, but only within abstract classes"],
+                correct: 1,
+                cat: "Polymorphism"
+            },
+            {
+                q: "Which keyword prevents a method from being overridden in a subclass?",
+                options: ["static", "final", "private", "volatile"],
+                correct: 1,
+                cat: "Polymorphism"
+            },
+            {
+                q: "What determines which overridden method runs at runtime?",
+                options: ["The type of reference variable", "The actual type of object being referred to", "The compiler's preference", "The alphabetical order of methods"],
+                correct: 1,
+                cat: "Polymorphism"
+            },
+
+            // ASSOCIATION (30-34)
+            {
+                q: "What does Association represent in OOP?",
+                options: ["The relationship between two separate classes through their objects", "The security layer of an application", "An index lookup mechanism", "An encapsulation standard"],
+                correct: 0,
+                cat: "Association"
+            },
+            {
+                q: "What kind of association is Aggregation?",
+                options: ["'Is-A' relationship (Strong inheritance)", "'Has-A' relationship (Weak association where child can exist independently)", "'Has-A' relationship (Strong association where child cannot exist independently)", "'Uses-A' temporary relationship"],
+                correct: 1,
+                cat: "Association"
+            },
+            {
+                q: "What is Composition?",
+                options: ["A weak form of aggregation", "A strong form of aggregation where parts cannot exist without the whole", "A technique to override final methods", "The practice of packing classes into JAR files"],
+                correct: 1,
+                cat: "Association"
+            },
+            {
+                q: "If a 'Car' class has an 'Engine' object inside it, and the engine cannot survive without the car, this is...",
+                options: ["Aggregation", "Composition", "Generalization", "Abstraction"],
+                correct: 1,
+                cat: "Association"
+            },
+            {
+                q: "Which relationship does inheritance represent?",
+                options: ["Has-A relationship", "Is-A relationship", "Uses-A relationship", "Part-of relationship"],
+                correct: 1,
+                cat: "Association"
+            },
+
+            // INDEX (35-40)
+            {
+                q: "In Java arrays, what is the index of the first element?",
+                options: ["1", "-1", "0", "It is dynamic"],
+                correct: 2,
+                cat: "Index"
+            },
+            {
+                q: "Which exception is thrown if you access an invalid index in an array?",
+                options: ["NullPointerException", "ArrayIndexOutOfBoundsException", "IndexMismatchException", "ArithmeticException"],
+                correct: 1,
+                cat: "Index"
+            },
+            {
+                q: "How do you find the last element's index in a Java list named 'myList'?",
+                options: ["myList.length()", "myList.size() - 1", "myList.lastIndex()", "myList.capacity()"],
+                correct: 1,
+                cat: "Index"
+            },
+            {
+                q: "What is the computational complexity of retrieving an element by its index in an ArrayList?",
+                options: ["O(n)", "O(1)", "O(log n)", "O(n log n)"],
+                correct: 1,
+                cat: "Index"
+            },
+            {
+                q: "Which method is used to get an element at a specific index in a Java ArrayList?",
+                options: ["element(index)", "get(index)", "index(index)", "fetch(index)"],
+                correct: 1,
+                cat: "Index"
+            },
+            {
+                q: "Does index-based access in a LinkedList have the same efficiency as an ArrayList in Java?",
+                options: ["Yes, both take O(1) constant time", "No, LinkedList takes O(n) because it must traverse node by node", "LinkedList is faster than ArrayList for index access", "None of the above"],
+                correct: 1,
+                cat: "Index"
+            }
+        ];
+
+        // --- DOM ELEMENTS ---
+        const quizCard = document.getElementById('quiz-card');
+        const resultsCard = document.getElementById('results-card');
+        const progressBar = document.getElementById('progress-bar');
+        const currentQNum = document.getElementById('current-q-num');
+        const categoryTag = document.getElementById('category-tag');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const nextBtn = document.getElementById('next-btn');
+        const correctScore = document.getElementById('correct-score');
+        const feedbackMessage = document.getElementById('feedback-message');
+        const restartBtn = document.getElementById('restart-btn');
+        const bgAnimation = document.getElementById('bg-animation');
+
+        // --- STATE VARIABLES ---
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+
+        // --- DYNAMIC BACKGROUND GENERATOR ---
+        // Generates floating icons behind the black container
+        function initBackground() {
+            const icons = ['fa-java', 'fa-code', 'fa-terminal', 'fa-cube', 'fa-cogs'];
+            for (let i = 0; i < 15; i++) {
+                const bubble = document.createElement('i');
+                const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+                bubble.className = `fab ${randomIcon} bg-bubble`;
+                bubble.style.left = `${Math.random() * 100}%`;
+                bubble.style.animationDelay = `${Math.random() * 12}s`;
+                bubble.style.animationDuration = `${10 + Math.random() * 15}s`;
+                bubble.style.fontSize = `${1.5 + Math.random() * 3}rem`;
+                bgAnimation.appendChild(bubble);
+            }
+        }
+
+        // --- SYSTEM ENGINE ---
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            resultsCard.style.display = 'none';
+            quizCard.style.display = 'block';
+            showQuestion();
+        }
+
+        function showQuestion() {
+            answered = false;
+            nextBtn.style.display = 'none';
+            optionsContainer.innerHTML = '';
+
+            const currentQ = quizData[currentQuestionIndex];
+            
+            // UI Updates
+            currentQNum.innerText = currentQuestionIndex + 1;
+            categoryTag.innerText = currentQ.cat;
+            questionText.innerText = currentQ.q;
+            
+            const progressPercent = ((currentQuestionIndex) / quizData.length) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+
+            // Populate options
+            currentQ.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.innerHTML = `<span>${option}</span>`;
+                button.addEventListener('click', () => selectAnswer(button, index));
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function selectAnswer(selectedBtn, selectedIndex) {
+            if (answered) return;
+            answered = true;
+            
+            const currentQ = quizData[currentQuestionIndex];
+            const correctIndex = currentQ.correct;
+            const optionButtons = optionsContainer.querySelectorAll('.option-btn');
+
+            if (selectedIndex === correctIndex) {
+                selectedBtn.classList.add('correct');
+                selectedBtn.insertAdjacentHTML('beforeend', '<i class="fas fa-check-circle"></i>');
+                score++;
+            } else {
+                selectedBtn.classList.add('wrong');
+                selectedBtn.insertAdjacentHTML('beforeend', '<i class="fas fa-times-circle"></i>');
+                
+                // Highlight the correct one
+                optionButtons[correctIndex].classList.add('correct');
+                optionButtons[correctIndex].insertAdjacentHTML('beforeend', '<i class="fas fa-check-circle"></i>');
+            }
+
+            // Disable all other buttons
+            optionButtons.forEach(btn => btn.setAttribute('disabled', 'true'));
+            
+            // Show Next Button
+            nextBtn.style.display = 'block';
+        }
+
+        function handleNext() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            quizCard.style.display = 'none';
+            resultsCard.style.display = 'block';
+            progressBar.style.width = '100%';
+            correctScore.innerText = score;
+
+            let feedback = "";
+            if (score === 40) {
+                feedback = "Flawless! You are a Java OOP Mastermind!";
+            } else if (score >= 30) {
+                feedback = "Outstanding! You have a very strong grasp of Java concepts.";
+            } else if (score >= 20) {
+                feedback = "Good job! A little more study on Abstraction and Polymorphism will make you perfect.";
+            } else {
+                feedback = "Keep practicing! Review Classes, Objects, and Lifecycle states to improve.";
+            }
+            feedbackMessage.innerText = feedback;
+        }
+
+        // --- LISTENERS ---
+        nextBtn.addEventListener('click', handleNext);
+        restartBtn.addEventListener('click', startQuiz);
+
+        // Initial launch
+        initBackground();
+        startQuiz();
+    </script>
+</body>
+</html>
