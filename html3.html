@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML Syntax Rules</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif;}
+body{background:#eef5ff;padding:30px;line-height:1.7;color:#333;}
+.container{max-width:1000px;margin:auto;}
+h1{text-align:center;color:#0b5394;margin-bottom:20px;}
+.section{background:#fff;padding:20px;margin:20px 0;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.1);}
+h2{color:#1565c0;margin-bottom:10px;}
+.tag{color:#d63384;font-weight:bold;}
+.code{background:#1e1e2f;color:#7CFC00;padding:12px;border-radius:8px;font-family:Consolas,monospace;white-space:pre-wrap;}
+.note{background:#fff8d5;border-left:5px solid orange;padding:10px;margin-top:10px;}
+.warning{background:#ffe5e5;border-left:5px solid red;padding:10px;margin-top:10px;}
+table{width:100%;border-collapse:collapse;margin-top:10px;}
+th,td{border:1px solid #ccc;padding:10px;}
+th{background:#1565c0;color:#fff;}
+tr:nth-child(even){background:#f4f8ff;}
+.footer{text-align:center;margin-top:25px;color:#666;}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1>📘 HTML Syntax Rules</h1>
+
+<div class="section">
+<h2>1. Opening & Closing Tags</h2>
+<p>Most HTML elements need both opening and closing tags.</p>
+<div class="code">
+Correct:
+&lt;p&gt;This is a paragraph.&lt;/p&gt;
+
+Incorrect:
+&lt;p&gt;This is a paragraph.
+</div>
+<div class="note">📝 Always close your HTML elements.</div>
+</div>
+
+<div class="section">
+<h2>2. Proper Tag Nesting</h2>
+<p>Close tags in reverse order.</p>
+<div class="code">
+Correct:
+&lt;strong&gt;&lt;em&gt;Text&lt;/em&gt;&lt;/strong&gt;
+
+Incorrect:
+&lt;strong&gt;&lt;em&gt;Text&lt;/strong&gt;&lt;/em&gt;
+</div>
+<div class="warning">⚠ Incorrect nesting may break your webpage.</div>
+</div>
+
+<div class="section">
+<h2>3. Empty Elements</h2>
+<p>These tags don't need closing tags.</p>
+<table>
+<tr><th>Tag</th><th>Purpose</th></tr>
+<tr><td>&lt;br&gt;</td><td>Line Break</td></tr>
+<tr><td>&lt;img&gt;</td><td>Image</td></tr>
+<tr><td>&lt;hr&gt;</td><td>Horizontal Line</td></tr>
+</table>
+</div>
+
+<div class="section">
+<h2>4. Attributes</h2>
+<p>Attributes belong inside the opening tag.</p>
+<div class="code">
+Correct:
+&lt;a href="https://google.com"&gt;Click&lt;/a&gt;
+
+Incorrect:
+&lt;a&gt;href="https://google.com"&gt;Click&lt;/a&gt;
+</div>
+</div>
+
+<div class="section">
+<h2>5. DOCTYPE</h2>
+<p>Every HTML5 page starts with:</p>
+<div class="code">&lt;!DOCTYPE html&gt;</div>
+<div class="note">📝 It must be the first line of the document.</div>
+</div>
+
+<div class="section">
+<h2>6. Lowercase Tags</h2>
+<p>Use lowercase tag names.</p>
+<div class="code">
+Best:
+&lt;div&gt;Hello&lt;/div&gt;
+
+Avoid:
+&lt;DIV&gt;Hello&lt;/DIV&gt;
+</div>
+</div>
+
+<div class="section">
+<h2>7. Basic HTML Structure</h2>
+<div class="code">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Website&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Hello World&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</div>
+</div>
+
+<div class="section">
+<h2>📖 HTML Anatomy</h2>
+
+<div class="code">
+Opening Tag     Attribute      Value        Content      Closing Tag
+
+&lt;p class="intro"&gt;Welcome to my website!&lt;/p&gt;
+</div>
+
+<table>
+<tr><th>Part</th><th>Description</th></tr>
+<tr><td>Opening Tag</td><td>Starts an element</td></tr>
+<tr><td>Attribute</td><td>Adds extra information</td></tr>
+<tr><td>Value</td><td>Value of the attribute</td></tr>
+<tr><td>Content</td><td>Visible text</td></tr>
+<tr><td>Closing Tag</td><td>Ends the element</td></tr>
+</table>
+
+</div>
+
+<div class="footer">
+Designed with ❤️ using HTML & CSS
+</div>
+
+</div>
+
+</body>
+</html>

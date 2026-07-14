@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elements of Basic HTML Structure</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif}
+body{background:linear-gradient(135deg,#eef7ff,#fffdf8);padding:20px;color:#333}
+.container{max-width:1100px;margin:auto}
+h1{text-align:center;color:#0b5394;margin-bottom:20px}
+.intro{text-align:center;margin-bottom:25px;color:#555}
+.card{background:#fff;padding:20px;margin:20px 0;border-radius:12px;box-shadow:0 5px 12px rgba(0,0,0,.1)}
+h2{color:#1565c0;margin-bottom:10px}
+.tag{color:#e91e63;font-weight:bold}
+.key{color:#2e7d32;font-weight:bold}
+.note,.warn{padding:12px;margin-top:10px;border-left:6px solid}
+.note{background:#fff8d6;border-color:#ffc107}
+.warn{background:#ffe5e5;border-color:red}
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th{background:#1565c0;color:#fff}
+th,td{padding:10px;border:1px solid #ddd}
+tr:nth-child(even){background:#f4f8ff}
+pre{background:#1e1e2f;color:#7CFC00;padding:15px;border-radius:8px;overflow:auto}
+footer{text-align:center;margin-top:20px;color:#666}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>📘 Elements of Basic HTML Structure</h1>
+
+<p class="intro">Learn the basic HTML tags used to create every webpage.</p>
+
+<div class="card">
+<h2><span class="tag">&lt;!DOCTYPE html&gt;</span></h2>
+<p>Defines the document as <span class="key">HTML5</span>. It should always be the first line.</p>
+<div class="note"><b>Note:</b> Always start every HTML page with this declaration.</div>
+</div>
+
+<div class="card">
+<h2><span class="tag">&lt;html&gt;</span></h2>
+<p>The <span class="key">root element</span> that contains the entire webpage.</p>
+</div>
+
+<div class="card">
+<h2><span class="tag">&lt;head&gt;</span></h2>
+<p>Stores <span class="key">meta-information</span> such as title, CSS links and metadata.</p>
+</div>
+
+<div class="card">
+<h2><span class="tag">&lt;title&gt;</span></h2>
+<p>Displays the webpage title in the browser tab and search results.</p>
+</div>
+
+<div class="card">
+<h2><span class="tag">&lt;body&gt;</span></h2>
+<p>Contains all the <span class="key">visible content</span> like headings, paragraphs, images and links.</p>
+<div class="warn"><b>Warning:</b> An HTML document can have only one &lt;body&gt; element.</div>
+</div>
+
+<div class="card">
+<h2>Essential HTML Elements</h2>
+<table>
+<tr><th>Tag</th><th>Purpose</th></tr>
+<tr><td>&lt;h1&gt;-&lt;h6&gt;</td><td>Headings</td></tr>
+<tr><td>&lt;p&gt;</td><td>Paragraph</td></tr>
+<tr><td>&lt;a&gt;</td><td>Hyperlink</td></tr>
+<tr><td>&lt;img&gt;</td><td>Image</td></tr>
+<tr><td>&lt;table&gt;</td><td>Table</td></tr>
+<tr><td>&lt;ul&gt;/&lt;ol&gt;</td><td>Lists</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h2>HTML is Not Case Sensitive</h2>
+<pre>&lt;P&gt;Hello&lt;/P&gt;
+
+is the same as
+
+&lt;p&gt;Hello&lt;/p&gt;</pre>
+<p>W3C recommends using <span class="key">lowercase</span> tags for good coding practice.</p>
+</div>
+
+<div class="card">
+<h2>HTML &lt;body&gt; Example</h2>
+<pre>&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;My Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Welcome&lt;/h1&gt;
+  &lt;p&gt;Hello World!&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+
+<div class="card">
+<h2>Definition & Usage</h2>
+<p>The <span class="tag">&lt;body&gt;</span> tag defines the document body and contains all webpage content.</p>
+</div>
+
+<div class="card">
+<h2>Global Attributes</h2>
+<p><b>id</b>, <b>class</b>, <b>style</b>, <b>title</b>, <b>lang</b></p>
+</div>
+
+<div class="card">
+<h2>Event Attributes</h2>
+<ul>
+<li><b>onload</b> – Runs when the page loads.</li>
+<li><b>onresize</b> – Runs when the browser window resizes.</li>
+<li><b>onunload</b> – Runs when the page closes.</li>
+</ul>
+</div>
+
+<footer>Designed with ❤️ using HTML & CSS</footer>
+
+</div>
+
+</body>
+</html>

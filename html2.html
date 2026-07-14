@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elements of Basic HTML Structure</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#eef7ff,#fdfbff);
+    color:#333;
+    line-height:1.8;
+    padding:30px;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+    color:#004aad;
+    margin-bottom:20px;
+    font-size:40px;
+    text-shadow:1px 1px 5px #b5d6ff;
+}
+
+.intro{
+    text-align:center;
+    font-size:18px;
+    color:#555;
+    margin-bottom:35px;
+}
+
+.section{
+    background:white;
+    border-radius:15px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
+}
+
+.section h2{
+    color:#0b5394;
+    border-left:6px solid #4caf50;
+    padding-left:12px;
+    margin-bottom:15px;
+}
+
+.tag{
+    color:#d63384;
+    font-weight:bold;
+    font-size:22px;
+}
+
+.highlight{
+    color:#e91e63;
+    font-weight:bold;
+}
+
+.keyword{
+    color:#1565c0;
+    font-weight:bold;
+}
+
+.code{
+    background:#1e1e2f;
+    color:#7CFC00;
+    padding:15px;
+    border-radius:10px;
+    font-family:Consolas,monospace;
+    overflow-x:auto;
+    margin-top:10px;
+}
+
+.note{
+    background:#fff8d5;
+    border-left:8px solid #ffc107;
+    padding:18px;
+    border-radius:10px;
+    margin:20px 0;
+}
+
+.note h3{
+    color:#d35400;
+    margin-bottom:8px;
+}
+
+.warning{
+    background:#ffe5e5;
+    border-left:8px solid red;
+    padding:18px;
+    border-radius:10px;
+    margin:20px 0;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+table th{
+    background:#0b5394;
+    color:white;
+    padding:12px;
+}
+
+table td{
+    border:1px solid #ddd;
+    padding:12px;
+}
+
+table tr:nth-child(even){
+    background:#f4f8ff;
+}
+
+.footer{
+    text-align:center;
+    color:#666;
+    margin-top:30px;
+    font-size:15px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>📘 Elements of Basic HTML Structure</h1>
+
+<p class="intro">
+Let's understand what each HTML tag does and why it is important in creating a webpage.
+</p>
+
+<div class="section">
+<h2>1. <span class="tag">&lt;!DOCTYPE html&gt;</span></h2>
+
+<p>
+The <span class="highlight">DOCTYPE declaration</span> defines that the document is an
+<span class="keyword">HTML5 document</span>. It must always be the
+<span class="highlight">first line</span> of your HTML code.
+</p>
+
+<div class="note">
+<h3>📝 Important Note</h3>
+Always write <b>&lt;!DOCTYPE html&gt;</b> at the beginning of every HTML document.
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>2. <span class="tag">&lt;html&gt;...&lt;/html&gt;</span></h2>
+
+<p>
+The <span class="highlight">&lt;html&gt;</span> element is the
+<span class="keyword">root element</span> of the webpage.
+Every other HTML element is placed inside it.
+</p>
+
+</div>
+
+<div class="section">
+
+<h2>3. <span class="tag">&lt;head&gt;...&lt;/head&gt;</span></h2>
+
+<p>
+The <span class="highlight">&lt;head&gt;</span> section stores
+<span class="keyword">meta-information</span> about the webpage.
+This information is <b>not displayed</b> on the webpage.
+</p>
+
+<ul>
+<li>Page Title</li>
+<li>Meta Tags</li>
+<li>CSS Links</li>
+<li>JavaScript Files</li>
+</ul>
+
+</div>
+
+<div class="section">
+
+<h2>4. <span class="tag">&lt;title&gt;...&lt;/title&gt;</span></h2>
+
+<p>
+The <span class="highlight">&lt;title&gt;</span> tag sets the
+<span class="keyword">title of the webpage</span>.
+</p>
+
+<table>
+<tr>
+<th>Where is it Visible?</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>Browser Tab</td>
+<td>Appears as the page title.</td>
+</tr>
+
+<tr>
+<td>Search Engines</td>
+<td>Used as the main title in search results.</td>
+</tr>
+
+</table>
+
+</div>
+
+<div class="section">
+
+<h2>5. <span class="tag">&lt;body&gt;...&lt;/body&gt;</span></h2>
+
+<p>
+The <span class="highlight">&lt;body&gt;</span> tag contains all the
+<span class="keyword">visible content</span> of a webpage.
+</p>
+
+<ul>
+<li>✔ Headings</li>
+<li>✔ Paragraphs</li>
+<li>✔ Images</li>
+<li>✔ Hyperlinks</li>
+<li>✔ Tables</li>
+<li>✔ Lists</li>
+<li>✔ Forms</li>
+</ul>
+
+<div class="warning">
+<h3>⚠ Important Note</h3>
+There can be <b>only ONE</b> <code>&lt;body&gt;</code> element in an HTML document.
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>📌 Essential HTML Elements (Tags)</h2>
+
+<p>
+HTML elements are the <span class="highlight">building blocks</span> of every webpage.
+Some of the most commonly used tags are:
+</p>
+
+<table>
+
+<tr>
+<th>Tag</th>
+<th>Purpose</th>
+</tr>
+
+<tr>
+<td>&lt;h1&gt; to &lt;h6&gt;</td>
+<td>Headings</td>
+</tr>
+
+<tr>
+<td>&lt;p&gt;</td>
+<td>Paragraph</td>
+</tr>
+
+<tr>
+<td>&lt;a&gt;</td>
+<td>Hyperlink</td>
+</tr>
+
+<tr>
+<td>&lt;img&gt;</td>
+<td>Image</td>
+</tr>
+
+<tr>
+<td>&lt;table&gt;</td>
+<td>Table</td>
+</tr>
+
+<tr>
+<td>&lt;ul&gt;, &lt;ol&gt;</td>
+<td>Lists</td>
+</tr>
+
+</table>
+
+</div>
+
+<div class="section">
+
+<h2>🔤 HTML is Not Case Sensitive</h2>
+
+<p>
+HTML tags are <span class="highlight">not case sensitive</span>.
+For example:
+</p>
+
+<div class="code">
+&lt;P&gt;Hello&lt;/P&gt;<br><br>
+is the same as<br><br>
+&lt;p&gt;Hello&lt;/p&gt;
+</div>
+
+<div class="note">
+<h3>💡 Best Practice</h3>
+
+Although HTML accepts both uppercase and lowercase tags,
+the <b> recommends using lowercase tags</b>.
+XHTML requires lowercase tags only.
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>💻 HTML &lt;body&gt; Example</h2>
+
+<div class="code">
+&lt;html&gt;<br><br>
+
+&lt;head&gt;<br>
+&nbsp;&nbsp;&lt;title&gt;Title of the document&lt;/title&gt;<br>
+&lt;/head&gt;<br><br>
+
+&lt;body&gt;<br>
+&nbsp;&nbsp;&lt;h1&gt;This is a heading&lt;/h1&gt;<br>
+&nbsp;&nbsp;&lt;p&gt;This is a paragraph.&lt;/p&gt;<br>
+&lt;/body&gt;<br><br>
+
+&lt;/html&gt;
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>📖 Definition and Usage</h2>
+
+<p>
+The <span class="highlight">&lt;body&gt;</span> tag defines the
+<span class="keyword">document body</span>.
+It contains all the visible content including headings,
+paragraphs, images, hyperlinks, tables and lists.
+</p>
+
+</div>
+
+<div class="section">
+
+<h2>🌍 Global Attributes</h2>
+
+<p>
+The <b>&lt;body&gt;</b> tag supports all
+<span class="highlight">Global Attributes</span> like:
+</p>
+
+<ul>
+<li>id</li>
+<li>class</li>
+<li>style</li>
+<li>title</li>
+<li>lang</li>
+</ul>
+
+</div>
+
+<div class="section">
+
+<h2>⚡ Event Attributes</h2>
+
+<p>
+The <b>&lt;body&gt;</b> tag also supports
+<span class="highlight">Event Attributes</span> such as:
+</p>
+
+<ul>
+<li><b>onload</b> → Executes when the page loads.</li>
+<li><b>onresize</b> → Executes when the browser window is resized.</li>
+<li><b>onunload</b> → Executes when the page is closed.</li>
+</ul>
+
+</div>
+
+<div class="footer">
+Designed with ❤️ using HTML & CSS
+</div>
+
+</div>
+
+</body>
+</html>
