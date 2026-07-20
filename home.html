@@ -1,118 +1,248 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Story Learning App</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Story Based Learning</title>
 
 <style>
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    text-align: center;
+    padding: 0;
+    min-height: 100vh;
+    /* Made the overlay gradients much more transparent (0.3 and 0.4 instead of 0.8 and 0.9) to make the image brighter */
+    background: radial-gradient(circle at 50% 30%, rgba(26, 27, 53, 0.3) 0%, rgba(8, 8, 17, 0.4) 80%), 
+                url('C:/Users/STUDENT/Downloads/Gemini_Generated_Image_6gbab26gbab26gba (1).png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #fff;
+    font-family: 'Georgia', serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    overflow-x: hidden;
+    position: relative;
 }
 
-/* Header */
+/* Background Lore Watermark Text */
+.bg-watermark {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-5deg);
+    font-size: 8vw;
+    font-weight: 900;
+    font-family: system-ui, -apple-system, sans-serif;
+    color: rgba(255, 255, 255, 0.04); /* Slightly tweaked visibility due to brighter background */
+    text-shadow: 0 0 40px rgba(255, 255, 255, 0.02);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1;
+    letter-spacing: 4px;
+}
+
+/* Header styled like an ancient frame */
 header {
-    padding: 20px;
-    font-size: 28px;
-    font-weight: bold;
-    letter-spacing: 1px;
+    text-align: center;
+    padding: 40px 20px;
+    z-index: 2;
 }
 
-/* Container */
-.container {
+header h1 {
+    font-size: 48px;
+    margin: 0;
+    color: #ffebd0;
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(255, 235, 208, 0.4), 0 4px 10px rgba(0, 0, 0, 0.8);
+    border-bottom: 2px solid rgba(255, 235, 208, 0.3);
+    padding-bottom: 12px;
+    display: inline-block;
+}
+
+/* Main Container for the Magic Blocks */
+.realm-stage {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
-    gap: 40px;
+    gap: 50px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    width: 100%;
+    margin: auto;
+    padding: 40px 20px;
+    z-index: 2;
 }
 
-/* Card Design */
-.card {
-    width: 250px;
-    height: 300px;
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
+/* Interactive Block Module */
+.orb-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     cursor: pointer;
-    transition: 0.4s;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    width: 260px;
     position: relative;
-    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Hover effect */
-.card:hover {
-    transform: translateY(-15px) scale(1.05);
+/* Transformed from Sphere into a Sleek Rectangular Block */
+.magic-sphere {
+    width: 100%;
+    height: 160px;
+    border-radius: 12px; /* Smooth rectangular corners */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 65px;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Glow effect */
-.card::before {
+/* Realistic Glossy Surface Reflection Overlay tweaked for rectangular fit */
+.magic-sphere::before {
     content: '';
     position: absolute;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
-    top: -100%;
-    left: 0;
-    transition: 0.5s;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 100%);
+    border-radius: 8px 8px 4px 4px;
+    pointer-events: none;
 }
 
-.card:hover::before {
-    top: 100%;
+/* Flat box-shadow for blocks instead of an orb shadow */
+.orb-shadow {
+    width: 90%;
+    height: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    margin-top: 20px;
+    filter: blur(8px);
+    transition: all 0.4s ease;
 }
 
-/* Card Content */
-.card h2 {
-    margin-top: 100px;
-    font-size: 28px;
+/* Specific rectangular styling for Python Block */
+.python-realm .magic-sphere {
+    background: linear-gradient(135deg, #166534 0%, #052e16 100%);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 20px rgba(74, 222, 128, 0.2);
 }
 
-/* Icons */
-.icon {
-    font-size: 50px;
-    margin-top: 40px;
+/* Specific rectangular styling for Web Tech Block */
+.wt-realm .magic-sphere {
+    background: linear-gradient(135deg, #075985 0%, #0c4a6e 100%);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.2);
 }
 
-/* Footer */
-footer {
+/* Specific rectangular styling for Java Block */
+.java-realm .magic-sphere {
+    background: linear-gradient(135deg, #9a3412 0%, #431407 100%);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 20px rgba(251, 146, 60, 0.2);
+}
+
+/* Titles under the elements */
+.realm-label {
+    margin-top: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.9);
+    transition: color 0.3s ease;
+}
+
+.python-realm .realm-label { color: #4ade80; }
+.wt-realm .realm-label { color: #38bdf8; }
+.java-realm .realm-label { color: #fb923c; }
+
+/* HOVER EFFECT: Elevates the rectangular blocks and increases glow scale */
+.orb-card:hover {
+    transform: translateY(-15px);
+}
+
+.orb-card:hover .magic-sphere {
+    transform: scale(1.03);
+}
+
+.python-realm:hover .magic-sphere { box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 40px rgba(74, 222, 128, 0.5); }
+.wt-realm:hover .magic-sphere { box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 40px rgba(56, 189, 248, 0.5); }
+.java-realm:hover .magic-sphere { box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 40px rgba(251, 146, 60, 0.5); }
+
+.orb-card:hover .orb-shadow {
+    transform: scale(0.85);
+    background: rgba(0, 0, 0, 0.4);
+    filter: blur(12px);
+}
+
+/* The Magic Open-Book Altar Base */
+.book-altar {
+    width: 650px;
+    height: 25px;
+    background: linear-gradient(90deg, transparent 0%, #291e13 15%, #463421 50%, #291e13 85%, transparent 100%);
+    border-radius: 50% / 8px;
+    margin-bottom: 50px;
+    position: relative;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.7);
+    z-index: 1;
+}
+
+.book-altar::after {
+    content: '';
     position: absolute;
-    bottom: 10px;
-    width: 100%;
+    top: -4px;
+    left: 20%;
+    right: 20%;
+    height: 8px;
+    background: linear-gradient(90deg, transparent, #ffebd0, transparent);
+    opacity: 0.4;
+    filter: blur(3px);
+}
+
+footer {
+    padding: 25px;
     font-size: 14px;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    letter-spacing: 1px;
+    z-index: 2;
 }
 </style>
 </head>
-
 <body>
 
-<header>📚 Story Based Learning</header>
+    <div class="bg-watermark">Story Based Learning</div>
 
-<div class="container">
+<header>
+    <h1>Story Based Learning</h1>
+</header>
 
-    <div class="card" onclick="goToPage('python.html')">
-        <div class="icon">🐍</div>
-        <h2>Python</h2>
+<div class="realm-stage">
+
+    <div class="orb-card python-realm" onclick="goToPage('python.html')">
+        <div class="magic-sphere">🐍</div>
+        <div class="orb-shadow"></div>
+        <div class="realm-label">Python</div>
     </div>
 
-    <div class="card" onclick="goToPage('wt.html')">
-        <div class="icon">🌐</div>
-        <h2>WT</h2>
+    <div class="orb-card wt-realm" onclick="goToPage('wt.html')">
+        <div class="magic-sphere">🌐</div>
+        <div class="orb-shadow"></div>
+        <div class="realm-label">WT</div>
     </div>
 
-    <div class="card" onclick="goToPage('java.html')">
-        <div class="icon">☕</div>
-        <h2>Java</h2>
+    <div class="orb-card java-realm" onclick="goToPage('java.html')">
+        <div class="magic-sphere">☕</div>
+        <div class="orb-shadow"></div>
+        <div class="realm-label">Java</div>
     </div>
 
 </div>
 
-<footer>✨ Learn with Stories | Interactive Education ✨</footer>
+<div class="book-altar"></div>
+
+<footer>✨ Lore-Based Interactive Learning Portal ✨</footer>
 
 <script>
 function goToPage(page) {
