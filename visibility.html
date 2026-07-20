@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mastering Java Inheritance</title>
+    <title>Mastering Java Visibility Modifiers</title>
     <style>
         /* Base Themes & Animated Background */
         :root {
@@ -269,59 +269,56 @@
 
     <main>
         <section id="explanation">
-            <h2>## What is Java Inheritance?</h2>
-            <p><strong>Inheritance</strong> is a core pillar of Object-Oriented Programming (OOP) that allows one class to acquire the properties (fields) and behaviors (methods) of another class.</p>
-            <p>Key Terminology & Rules:</p>
+            <h2>## Visibility in Java (Access Modifiers)</h2>
+            <p>Visibility controls the scope of access for variables, methods, constructors, and classes. Java uses **Access Modifiers** to protect sensitive information, achieve encapsulation, and control application architecture constraints.</p>
+            <p>The Four Main Visibility Levels:</p>
             <ul>
-                <li><strong>Superclass (Parent Class):</strong> The class whose features are inherited.</li>
-                <li><strong>Subclass (Child Class):</strong> The class that inherits from the parent class. It can also add its own fields and methods.</li>
-                <li><strong>The <code>extends</code> Keyword:</strong> Used to establish inheritance relationships between classes.</li>
-                <li><strong>Code Reusability:</strong> Subclasses reuse parent logic without rewriting it, allowing clean software scalability.</li>
-                <li><strong>Single Inheritance Constraint:</strong> In Java, a class can directly extend only <em>one</em> superclass to avoid ambiguity.</li>
+                <li><strong><code>private</code>:</strong> The strictly narrow scope level. Accessible <em>only</em> inside the containing class structure.</li>
+                <li><strong><code>default</code> (No keyword specified):</strong> Accessible only inside classes within the <em>same package folder</em>. Also termed package-private.</li>
+                <li><strong><code>protected</code>:</strong> Accessible within the <em>same package</em>, plus subclasses residing across completely different package folders.</li>
+                <li><strong><code>public</code>:</strong> The widest scope availability level. Accessible universally from anywhere across the structural program environment.</li>
             </ul>
         </section>
 
         <section id="examples">
             <h2>## Practical Code Implementation</h2>
-            <p>Below is a clean demonstration of single and multilevel inheritance concepts mapped cleanly via an application layer.</p>
+            <p>The code blocks below showcase standard data encapsulation techniques utilizing varying visibility limits on fields.</p>
             
-            <pre><code><span class="comment">// 1. Base Superclass</span>
-<span class="keyword">class</span> <span class="class-name">Vehicle</span> {
-    <span class="type">String</span> brand = <span class="comment">"Generic Brand"</span>;
+            <pre><code><span class="keyword">class</span> <span class="class-name">Account</span> {
+    <span class="comment">// 1. private visibility level hides sensitive information</span>
+    <span class="keyword">private double</span> balance;
     
-    <span class="keyword">void</span> <span class="type">horn</span>() {
-        System.out.println(<span class="comment">"Beep, beep!"</span>);
+    <span class="comment">// 2. public constructor allows instance allocation from outside</span>
+    <span class="keyword">public</span> <span class="class-name">Account</span>(<span class="keyword">double</span> initialBalance) {
+        <span class="keyword">this</span>.balance = initialBalance;
+    }
+
+    <span class="comment">// 3. public getter method securely exposes read-only operations</span>
+    <span class="keyword">public double</span> <span class="type">getBalance</span>() {
+        <span class="keyword">return this</span>.balance;
+    }
+
+    <span class="comment">// 4. protected tracking routine restricted to sub-structures</span>
+    <span class="keyword">protected void</span> <span class="type">logTransaction</span>() {
+        System.out.println(<span class="comment">"Internal visibility log routine invoked."</span>);
     }
 }
 
-<span class="comment">// 2. Subclass inheriting from Vehicle</span>
-<span class="keyword">class</span> <span class="class-name">Car</span> <span class="keyword">extends</span> <span class="class-name">Vehicle</span> {
-    <span class="type">String</span> modelName = <span class="comment">"Mustang"</span>;
-    
-    <span class="keyword">void</span> <span class="type">displaySpecs</span>() {
-        <span class="comment">// Accessing parent field (brand) along with child field</span>
-        System.out.println(brand + <span class="comment">" "</span> + modelName);
-    }
-}
-
-<span class="comment">// 3. Executive Main Application</span>
 <span class="keyword">public class</span> <span class="class-name">Main</span> {
     <span class="keyword">public static void</span> <span class="type">main</span>(String[] args) {
-        <span class="comment">// Create a child instance</span>
-        Car myCar = <span class="keyword">new</span> Car();
+        Account acc = <span class="keyword">new</span> Account(5000.0);
         
-        <span class="comment">// Call parent method</span>
-        myCar.horn();
+        <span class="comment">// Direct access fails compilation: acc.balance = 10000;</span>
         
-        <span class="comment">// Call child method</span>
-        myCar.displaySpecs();
+        <span class="comment">// Accessing through secure public methods works cleanly</span>
+        System.out.println(<span class="comment">"Current Balance: "</span> + acc.getBalance());
     }
 }</code></pre>
         </section>
 
         <section id="quiz">
             <h2>## Grand Assessment Challenge</h2>
-            <p>Select your answer below to test your knowledge depth on Java Inheritance.</p>
+            <p>Select your answer below to test your knowledge depth on Java Visibility Rules.</p>
             
             <div class="quiz-container" id="quiz-box">
                 </div>
@@ -334,16 +331,16 @@
 
     <script>
         const questions = [
-            { q: "1. Which keyword is used to implement inheritance in Java classes?", a: ["implements", "extends", "inherits", "super"], c: 1 },
-            { q: "2. Can a Java class extend multiple classes simultaneously?", a: ["Yes", "No", "Only if classes are abstract", "Only in Java 17+"], c: 1 },
-            { q: "3. Which keyword is used by a subclass to explicitly invoke a parent class constructor?", a: ["this", "parent", "super", "base"], c: 2 },
-            { q: "4. What type of inheritance describes A extending B, and B extending C?", a: ["Multiple Inheritance", "Hierarchical Inheritance", "Multilevel Inheritance", "Hybrid Inheritance"], c: 2 },
-            { q: "5. Which class is the implicit root superclass of all classes in Java?", a: ["String", "Main", "Class", "Object"], c: 3 },
-            { q: "6. Can private members of a superclass be directly accessed inside a subclass?", a: ["Yes, always", "No, private variables are not directly accessible", "Yes, using 'this'", "Only if they are final"], c: 1 },
-            { q: "7. Which access modifier keeps fields accessible to subclasses but private to the outside world?", a: ["public", "private", "protected", "package-private"], c: 2 },
-            { q: "8. What happens when a subclass provides a specific implementation for a method already defined in its parent class?", a: ["Method Overloading", "Method Overriding", "Compile Error", "Constructor Chaining"], c: 1 },
-            { q: "9. Can a class declared with the 'final' keyword be extended?", a: ["Yes, if public", "No, final classes cannot be inherited", "Only inside the same package", "Only if it implements an interface"], c: 1 },
-            { q: "10. What design concept does inheritance represent?", a: ["HAS-A relationship", "IS-A relationship", "PART-OF relationship", "USES-A relationship"], c: 1 }
+            { q: "1. Which modifier provides the most restrictive scope level in Java?", a: ["public", "protected", "default", "private"], c: 3 },
+            { q: "2. If no explicit visibility keyword is provided, what is the level automatically applied?", a: ["private", "default (package-private)", "protected", "public"], c: 1 },
+            { q: "3. Which modifier allows access within the same package, and via subclasses in other packages?", a: ["private", "default", "protected", "public"], c: 2 },
+            { q: "4. Can a top-level primary Java class be declared as 'private'?", a: ["Yes, always", "No, top-level classes must be public or default", "Only if it is a main execution class", "Only inside a loop structure"], c: 1 },
+            { q: "5. Which level gives universal visibility access to variables from anywhere in the app?", a: ["public", "protected", "default", "global"], c: 0 },
+            { q: "6. Can local variables declared inside methods use visibility access modifiers?", a: ["Yes, public only", "Yes, private only", "No, local variables cannot have visibility modifiers", "Only if declared final"], c: 2 },
+            { q: "7. Hiding data fields behind private scopes and providing access via getters/setters is called...", a: ["Polymorphism", "Abstraction", "Inheritance", "Encapsulation"], c: 3 },
+            { q: "8. A subclass can access default (package-private) members of its superclass only if...", a: ["The subclass is public", "Both classes reside within the same package", "The fields are marked static", "The subclass is declared abstract"], c: 1 },
+            { q: "9. Which visibility modifier cannot be used for interface methods prior to Java 9?", a: ["public", "private", "protected", "abstract"], c: 2 },
+            { q: "10. Does a subclass method overriding a parent method have the right to reduce its visibility constraint?", a: ["Yes, completely fine", "No, it cannot assign a more restrictive visibility level", "Only if the method is static", "Only inside an abstract class context"], c: 1 }
         ];
 
         const container = document.getElementById('quiz-box');

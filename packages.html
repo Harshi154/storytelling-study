@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mastering Java Inheritance</title>
+    <title>Mastering Java Packages</title>
     <style>
         /* Base Themes & Animated Background */
         :root {
@@ -269,59 +269,48 @@
 
     <main>
         <section id="explanation">
-            <h2>## What is Java Inheritance?</h2>
-            <p><strong>Inheritance</strong> is a core pillar of Object-Oriented Programming (OOP) that allows one class to acquire the properties (fields) and behaviors (methods) of another class.</p>
-            <p>Key Terminology & Rules:</p>
+            <h2>## What are Java Packages?</h2>
+            <p>A <strong>Package</strong> in Java is a mechanism used to encapsulate a group of classes, sub-packages, and interfaces. Think of it like a folder directory on your computer that organizes your source files.</p>
+            <p>Key Purposes & Advantages:</p>
             <ul>
-                <li><strong>Superclass (Parent Class):</strong> The class whose features are inherited.</li>
-                <li><strong>Subclass (Child Class):</strong> The class that inherits from the parent class. It can also add its own fields and methods.</li>
-                <li><strong>The <code>extends</code> Keyword:</strong> Used to establish inheritance relationships between classes.</li>
-                <li><strong>Code Reusability:</strong> Subclasses reuse parent logic without rewriting it, allowing clean software scalability.</li>
-                <li><strong>Single Inheritance Constraint:</strong> In Java, a class can directly extend only <em>one</em> superclass to avoid ambiguity.</li>
+                <li><strong>Preventing Naming Conflicts:</strong> Two classes can have the same exact name (e.g., <code>User</code>) as long as they live in different packages.</li>
+                <li><strong>Access Control:</strong> Packages interface closely with access modifiers (like `protected` and default package-private visibility).</li>
+                <li><strong>Modularity and Maintenance:</strong> Locating files becomes significantly easier in large production codebases when categorized systematically.</li>
+                <li><strong>Built-in Packages:</strong> Java comes equipped with robust internal packages like <code>java.util</code>, <code>java.lang</code>, and <code>java.io</code>.</li>
             </ul>
         </section>
 
         <section id="examples">
             <h2>## Practical Code Implementation</h2>
-            <p>Below is a clean demonstration of single and multilevel inheritance concepts mapped cleanly via an application layer.</p>
+            <p>To use custom packages, you define the directory namespace at the absolute top of the source file. Here is how you structure a package definition and import it across separate source files.</p>
             
-            <pre><code><span class="comment">// 1. Base Superclass</span>
-<span class="keyword">class</span> <span class="class-name">Vehicle</span> {
-    <span class="type">String</span> brand = <span class="comment">"Generic Brand"</span>;
-    
-    <span class="keyword">void</span> <span class="type">horn</span>() {
-        System.out.println(<span class="comment">"Beep, beep!"</span>);
-    }
-}
+            <pre><code><span class="comment">// FILE 1: Structured inside directory: ./com/education/math/</span>
+<span class="keyword">package</span> com.education.math;
 
-<span class="comment">// 2. Subclass inheriting from Vehicle</span>
-<span class="keyword">class</span> <span class="class-name">Car</span> <span class="keyword">extends</span> <span class="class-name">Vehicle</span> {
-    <span class="type">String</span> modelName = <span class="comment">"Mustang"</span>;
-    
-    <span class="keyword">void</span> <span class="type">displaySpecs</span>() {
-        <span class="comment">// Accessing parent field (brand) along with child field</span>
-        System.out.println(brand + <span class="comment">" "</span> + modelName);
+<span class="keyword">public class</span> <span class="class-name">Calculator</span> {
+    <span class="keyword">public int</span> <span class="type">add</span>(<span class="keyword">int</span> a, <span class="keyword">int</span> b) {
+        <span class="keyword">return</span> a + b;
     }
-}
+}</code></pre>
 
-<span class="comment">// 3. Executive Main Application</span>
-<span class="keyword">public class</span> <span class="class-name">Main</span> {
+            <pre><code><span class="comment">// FILE 2: Structured inside an entirely different directory namespace</span>
+<span class="keyword">package</span> com.education.main;
+
+<span class="comment">// Importing the Calculator class from its package</span>
+<span class="keyword">import</span> com.education.math.Calculator;
+
+<span class="keyword">public class</span> <span class="class-name">App</span> {
     <span class="keyword">public static void</span> <span class="type">main</span>(String[] args) {
-        <span class="comment">// Create a child instance</span>
-        Car myCar = <span class="keyword">new</span> Car();
-        
-        <span class="comment">// Call parent method</span>
-        myCar.horn();
-        
-        <span class="comment">// Call child method</span>
-        myCar.displaySpecs();
+        Calculator calc = <span class="keyword">new</span> Calculator();
+        <span class="keyword">int</span> result = calc.add(15, 25);
+        System.out.println(<span class="comment">"Calculated Value: "</span> + result);
     }
 }</code></pre>
         </section>
 
         <section id="quiz">
             <h2>## Grand Assessment Challenge</h2>
-            <p>Select your answer below to test your knowledge depth on Java Inheritance.</p>
+            <p>Select your answer below to test your knowledge depth on Java Packages.</p>
             
             <div class="quiz-container" id="quiz-box">
                 </div>
@@ -334,16 +323,16 @@
 
     <script>
         const questions = [
-            { q: "1. Which keyword is used to implement inheritance in Java classes?", a: ["implements", "extends", "inherits", "super"], c: 1 },
-            { q: "2. Can a Java class extend multiple classes simultaneously?", a: ["Yes", "No", "Only if classes are abstract", "Only in Java 17+"], c: 1 },
-            { q: "3. Which keyword is used by a subclass to explicitly invoke a parent class constructor?", a: ["this", "parent", "super", "base"], c: 2 },
-            { q: "4. What type of inheritance describes A extending B, and B extending C?", a: ["Multiple Inheritance", "Hierarchical Inheritance", "Multilevel Inheritance", "Hybrid Inheritance"], c: 2 },
-            { q: "5. Which class is the implicit root superclass of all classes in Java?", a: ["String", "Main", "Class", "Object"], c: 3 },
-            { q: "6. Can private members of a superclass be directly accessed inside a subclass?", a: ["Yes, always", "No, private variables are not directly accessible", "Yes, using 'this'", "Only if they are final"], c: 1 },
-            { q: "7. Which access modifier keeps fields accessible to subclasses but private to the outside world?", a: ["public", "private", "protected", "package-private"], c: 2 },
-            { q: "8. What happens when a subclass provides a specific implementation for a method already defined in its parent class?", a: ["Method Overloading", "Method Overriding", "Compile Error", "Constructor Chaining"], c: 1 },
-            { q: "9. Can a class declared with the 'final' keyword be extended?", a: ["Yes, if public", "No, final classes cannot be inherited", "Only inside the same package", "Only if it implements an interface"], c: 1 },
-            { q: "10. What design concept does inheritance represent?", a: ["HAS-A relationship", "IS-A relationship", "PART-OF relationship", "USES-A relationship"], c: 1 }
+            { q: "1. Which keyword is used to declare a package name space in a Java source file?", a: ["import", "package", "namespace", "directory"], c: 1 },
+            { q: "2. Where must a package statement be placed inside a Java source file?", a: ["Anywhere inside the file", "Directly inside the main method", "As the first non-comment statement", "At the very end of the file"], c: 2 },
+            { q: "3. Which package is automatically imported into every Java program by default?", a: ["java.util", "java.io", "java.lang", "java.net"], c: 2 },
+            { q: "4. What character syntax allows importing all classes under a specific package folder at once?", a: ["The # symbol", "The * wildcard operator", "The ? symbol", "The & operator"], c: 1 },
+            { q: "5. If a class has no package statement specified, which package does it implicitly join?", a: ["The default/nameless package", "The java.lang package", "The root system directory", "It throws a compilation error"], c: 0 },
+            { q: "6. Which keyword brings an external package class visibility into your current file context?", a: ["include", "package", "require", "import"], c: 3 },
+            { q: "7. How do package names visually relate to physical operating system layouts?", a: ["They translate to database keys", "They map directly to nested folder directory paths", "They have no relationship to storage", "They require ZIP encryption mappings"], c: 1 },
+            { q: "8. What naming standard convention is widely used for creating unique package domains?", a: ["Uppercase camelCase text strings", "Reversed company internet domain names", "Random alphanumeric hashing", "Using numerical version sequences"], c: 1 },
+            { q: "9. Does importing a whole sub-folder using a wildcard (*) also import nested sub-packages beneath it?", a: ["Yes, completely recursively", "No, wildcards do not import sub-packages", "Only if declared abstract", "Only inside modules"], c: 1 },
+            { q: "10. Which visibility modifier restricts members to only be accessed inside the same package?", a: ["public", "private", "default (no modifier / package-private)", "protected"], c: 2 }
         ];
 
         const container = document.getElementById('quiz-box');

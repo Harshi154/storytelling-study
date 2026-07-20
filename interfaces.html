@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mastering Java Inheritance</title>
+    <title>Mastering Java Interfaces</title>
     <style>
         /* Base Themes & Animated Background */
         :root {
@@ -245,6 +245,30 @@
             color: white;
         }
 
+        /* Responsive Video Container */
+        .video-wrapper {
+            max-width: 1000px;
+            margin: 0 auto 40px auto;
+            padding: 0 20px;
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
         footer {
             text-align: center;
             padding: 40px;
@@ -269,64 +293,65 @@
 
     <main>
         <section id="explanation">
-            <h2>## What is Java Inheritance?</h2>
-            <p><strong>Inheritance</strong> is a core pillar of Object-Oriented Programming (OOP) that allows one class to acquire the properties (fields) and behaviors (methods) of another class.</p>
-            <p>Key Terminology & Rules:</p>
+            <h2>## What is a Java Interface?</h2>
+            <p>An <strong>Interface</strong> in Java is a blueprint of a class. It is a collection of abstract methods and static constants. It specifies <em>what</em> a class should do, but not <em>how</em> it does it.</p>
+            <p>Key Characteristics:</p>
             <ul>
-                <li><strong>Superclass (Parent Class):</strong> The class whose features are inherited.</li>
-                <li><strong>Subclass (Child Class):</strong> The class that inherits from the parent class. It can also add its own fields and methods.</li>
-                <li><strong>The <code>extends</code> Keyword:</strong> Used to establish inheritance relationships between classes.</li>
-                <li><strong>Code Reusability:</strong> Subclasses reuse parent logic without rewriting it, allowing clean software scalability.</li>
-                <li><strong>Single Inheritance Constraint:</strong> In Java, a class can directly extend only <em>one</em> superclass to avoid ambiguity.</li>
+                <li><strong>100% Abstraction:</strong> By default, all methods inside an interface are public and abstract (until Java 8 introduced default and static methods).</li>
+                <li><strong>Multiple Inheritance:</strong> A Java class can inherit only one class, but it can implement <strong>multiple interfaces</strong>.</li>
+                <li><strong>Loose Coupling:</strong> Interfaces allow software components to interact without being tightly bound to specific structural implementations.</li>
             </ul>
         </section>
 
         <section id="examples">
             <h2>## Practical Code Implementation</h2>
-            <p>Below is a clean demonstration of single and multilevel inheritance concepts mapped cleanly via an application layer.</p>
+            <p>Below is a classic demonstration of multiple interfaces implemented by a single class structure.</p>
             
-            <pre><code><span class="comment">// 1. Base Superclass</span>
-<span class="keyword">class</span> <span class="class-name">Vehicle</span> {
-    <span class="type">String</span> brand = <span class="comment">"Generic Brand"</span>;
-    
-    <span class="keyword">void</span> <span class="type">horn</span>() {
-        System.out.println(<span class="comment">"Beep, beep!"</span>);
+            <pre><code><span class="comment">// 1. Define the first Interface</span>
+interface <span class="class-name">Swimmer</span> {
+    <span class="keyword">void</span> <span class="type">swim</span>();
+}
+
+<span class="comment">// 2. Define the second Interface</span>
+interface <span class="class-name">Flyer</span> {
+    <span class="keyword">void</span> <span class="type">fly</span>();
+}
+
+<span class="comment">// 3. Implementation class combining both blueprints</span>
+<span class="keyword">class</span> <span class="class-name">Duck</span> <span class="keyword">implements</span> <span class="class-name">Swimmer</span>, <span class="class-name">Flyer</span> {
+    <span class="keyword">public void</span> <span class="type">swim</span>() {
+        System.out.println(<span class="comment">"Duck is paddling smoothly through water."</span>);
+    }
+
+    <span class="keyword">public void</span> <span class="type">fly</span>() {
+        System.out.println(<span class="comment">"Duck is soaring over the lake."</span>);
     }
 }
 
-<span class="comment">// 2. Subclass inheriting from Vehicle</span>
-<span class="keyword">class</span> <span class="class-name">Car</span> <span class="keyword">extends</span> <span class="class-name">Vehicle</span> {
-    <span class="type">String</span> modelName = <span class="comment">"Mustang"</span>;
-    
-    <span class="keyword">void</span> <span class="type">displaySpecs</span>() {
-        <span class="comment">// Accessing parent field (brand) along with child field</span>
-        System.out.println(brand + <span class="comment">" "</span> + modelName);
-    }
-}
-
-<span class="comment">// 3. Executive Main Application</span>
+<span class="comment">// 4. Executive Main Application</span>
 <span class="keyword">public class</span> <span class="class-name">Main</span> {
     <span class="keyword">public static void</span> <span class="type">main</span>(String[] args) {
-        <span class="comment">// Create a child instance</span>
-        Car myCar = <span class="keyword">new</span> Car();
-        
-        <span class="comment">// Call parent method</span>
-        myCar.horn();
-        
-        <span class="comment">// Call child method</span>
-        myCar.displaySpecs();
+        Duck mallard = <span class="keyword">new</span> Duck();
+        mallard.swim();
+        mallard.fly();
     }
 }</code></pre>
         </section>
 
         <section id="quiz">
             <h2>## Grand Assessment Challenge</h2>
-            <p>Select your answer below to test your knowledge depth on Java Inheritance.</p>
+            <p>Select your answer below to test your knowledge depth on Java Interfaces.</p>
             
             <div class="quiz-container" id="quiz-box">
-                </div>
+            </div>
         </section>
     </main>
+
+    <div class="video-wrapper">
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/ezmsFpmaCD8" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
 
     <footer>
         &copy; 2026 Interactive Java Learning Environment. Designed in Sleek Dark Theme.
@@ -334,16 +359,16 @@
 
     <script>
         const questions = [
-            { q: "1. Which keyword is used to implement inheritance in Java classes?", a: ["implements", "extends", "inherits", "super"], c: 1 },
-            { q: "2. Can a Java class extend multiple classes simultaneously?", a: ["Yes", "No", "Only if classes are abstract", "Only in Java 17+"], c: 1 },
-            { q: "3. Which keyword is used by a subclass to explicitly invoke a parent class constructor?", a: ["this", "parent", "super", "base"], c: 2 },
-            { q: "4. What type of inheritance describes A extending B, and B extending C?", a: ["Multiple Inheritance", "Hierarchical Inheritance", "Multilevel Inheritance", "Hybrid Inheritance"], c: 2 },
-            { q: "5. Which class is the implicit root superclass of all classes in Java?", a: ["String", "Main", "Class", "Object"], c: 3 },
-            { q: "6. Can private members of a superclass be directly accessed inside a subclass?", a: ["Yes, always", "No, private variables are not directly accessible", "Yes, using 'this'", "Only if they are final"], c: 1 },
-            { q: "7. Which access modifier keeps fields accessible to subclasses but private to the outside world?", a: ["public", "private", "protected", "package-private"], c: 2 },
-            { q: "8. What happens when a subclass provides a specific implementation for a method already defined in its parent class?", a: ["Method Overloading", "Method Overriding", "Compile Error", "Constructor Chaining"], c: 1 },
-            { q: "9. Can a class declared with the 'final' keyword be extended?", a: ["Yes, if public", "No, final classes cannot be inherited", "Only inside the same package", "Only if it implements an interface"], c: 1 },
-            { q: "10. What design concept does inheritance represent?", a: ["HAS-A relationship", "IS-A relationship", "PART-OF relationship", "USES-A relationship"], c: 1 }
+            { q: "1. Can an interface be instantiated directly using the 'new' keyword?", a: ["Yes", "No", "Only if it is empty", "Only in Java 8+"], c: 1 },
+            { q: "2. Which keyword is used by a class to inherit structural behaviors from an interface?", a: ["extends", "inherits", "implements", "imports"], c: 2 },
+            { q: "3. Prior to Java 8, all methods inside an interface were implicitly...", a: ["private & static", "public & abstract", "protected & final", "package-private"], c: 1 },
+            { q: "4. Can an interface extend another interface?", a: ["No, interfaces cannot extend anything", "Yes, using the 'implements' keyword", "Yes, using the 'extends' keyword", "Yes, but only up to three interfaces"], c: 2 },
+            { q: "5. What mechanism allows Java to bypass single class inheritance constraints?", a: ["Abstract Classes", "Encapsulation", "Multiple Interfaces Implementation", "Polymorphic Casting"], c: 2 },
+            { q: "6. Variables defined inside an interface are implicitly...", a: ["public, static, and final", "private and transient", "protected and volatile", "local variables"], c: 0 },
+            { q: "7. Which feature introduced in Java 8 allowed interfaces to have method bodies?", a: ["Static variables", "Default methods", "Private inner classes", "Anonymous blocks"], c: 1 },
+            { q: "8. What is an interface with zero declared methods called?", a: ["Null Interface", "Void Interface", "Marker Interface", "Functional Interface"], c: 2 },
+            { q: "9. What is an interface containing exactly one abstract method called?", a: ["Single Interface", "Functional Interface", "Marker Interface", "Lambda Prototype"], c: 1 },
+            { q: "10. Can an interface have a constructor?", a: ["Yes, if it has parameters", "Yes, default constructor only", "No, interfaces cannot have constructors", "Only if declared private"], c: 2 }
         ];
 
         const container = document.getElementById('quiz-box');
