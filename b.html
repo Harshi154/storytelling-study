@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSBTE Diploma Java - Unit 2 Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- Color Palette & Variable Configuration --- */
+        :root {
+            --bg-dark: #050508;
+            --card-bg: rgba(15, 15, 22, 0.85);
+            --java-orange: #f89820;
+            --java-blue: #5382a1;
+            --text-light: #f1f1f1;
+            --text-muted: #a0a0b8;
+            --accent-glow: rgba(248, 152, 32, 0.35);
+            --trans-smooth: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            padding-bottom: 60px;
+        }
+
+        /* --- Ambient Background Overlay --- */
+        .bg-wrapper {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background: 
+                radial-gradient(circle at center, rgba(5, 5, 8, 0.8) 0%, #050508 100%), 
+                url('data:image/png;base64,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') center/cover no-repeat;
+            filter: blur(3px); /* Gently blurs the background code/elements for better readability */
+        }
+
+        /* --- Top Navigation Header --- */
+        header {
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(5, 5, 8, 0.95), transparent);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .left-brand-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Left-side floating Java Branding Icon */
+        .java-icon-badge {
+            background: rgba(255, 255, 255, 0.03);
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid var(--java-orange);
+            box-shadow: 0 0 15px var(--accent-glow);
+            animation: pulseGlow 2.5s ease-in-out infinite alternate;
+        }
+
+        .java-icon-badge i {
+            font-size: 2rem;
+            color: var(--java-orange);
+        }
+
+        .title-area h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(45deg, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- Layout Container --- */
+        main {
+            max-width: 1050px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* Intro Description Box */
+        .curriculum-intro {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(255, 255, 255, 0.08);
+            padding: 25px;
+            border-radius: 12px;
+            line-height: 1.6;
+            color: var(--text-muted);
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .curriculum-intro strong {
+            color: #fff;
+        }
+
+        /* --- Interactive Navigation Link Cards --- */
+        .topic-link-card {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(40px);
+            animation: cardSlideUp 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+            transition: var(--trans-smooth);
+        }
+
+        /* Card Hover Animations */
+        .topic-link-card:hover {
+            transform: translateY(-6px) scale(1.01);
+            border-color: var(--java-orange);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), 0 0 30px rgba(248, 152, 32, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 15px;
+        }
+
+        .header-main-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-tag {
+            background: linear-gradient(135deg, var(--java-blue), var(--java-orange));
+            color: #050508;
+            font-weight: 800;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+        }inheritance.html
+
+        .card-header h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* Action redirect arrow indicator */
+        .redirect-arrow {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            transition: var(--trans-smooth);
+        }
+
+        .topic-link-card:hover .redirect-arrow {
+            color: var(--java-orange);
+            transform: translateX(5px);
+        }
+
+        .summary-paragraph {
+            color: var(--text-light);
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* --- Content Nesting Configurations --- */
+        .sub-construct-tree {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sub-node {
+            background: rgba(255, 255, 255, 0.01);
+            border-left: 3px solid var(--java-blue);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            transition: var(--trans-smooth);
+        }
+
+        .topic-link-card:hover .sub-node {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .sub-node strong {
+            color: #fff;
+            display: inline-block;
+            margin-bottom: 4px;
+        }
+
+        .sub-node p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Warning & Highlight blocks */
+        .alert-callout {
+            background: rgba(231, 29, 54, 0.05);
+            border: 1px solid rgba(231, 29, 54, 0.15);
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #e71d36;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Simple placeholder table for section 2.5 */
+        .preview-matrix {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        .preview-matrix th, .preview-matrix td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .preview-matrix th { color: var(--java-blue); }
+
+        /* --- Keyframe Animation Engines --- */
+        @keyframes pulseGlow {
+            0% { transform: translateY(0); box-shadow: 0 0 15px rgba(248, 152, 32, 0.2); }
+            100% { transform: translateY(-3px); box-shadow: 0 5px 25px rgba(248, 152, 32, 0.5); }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes cardSlideUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Card animation delay staging loops */
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+
+        footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 0.8rem;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-wrapper"></div>
+
+    <header>
+        <div class="left-brand-group">
+            <div class="java-icon-badge">
+                <i class="fab fa-java"></i>
+            </div>
+            <div class="title-area">
+                <h1>Unit - 2</h1>
+                <p>MSBTE Curriculum Roadmap</p>
+            </div>
+        </div>
+    </header>
+ 
+    <main>
+        
+        <div class="curriculum-intro">
+            <p>In the 4th-semester Diploma engineering curriculum (such as MSBTE's K-Scheme and standard polytechnic boards), <strong>Unit 2</strong> generally focuses on <strong>Inheritance, Interfaces, and Packages (or Derived Syntactical Constructs)</strong>.</p>
+            <p style="margin-top: 10px;">The core concepts are organized below to help you prepare effectively for exams. Click on any section header code below to browse specialized sub-modules.</p>
+        </div>
+
+        <a href="" class="topic-link-card delay-1">
+            <div class="card-header">
+                <div class="header-main-info">
+                    <div class="section-tag">2.1</div>
+                    <h2>Inheritance (Code Reusability)</h2>
+                </div>
+                <div class="redirect-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
+        </a>
+
+        <a href="polymorphism.html" class="topic-link-card delay-2">
+            <div class="card-header">
+                <div class="header-main-info">
+                    <div class="section-tag">2.2</div>
+                    <h2>Polymorphism & Abstraction</h2>
+                </div>
+                <div class="redirect-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
+        </a>
+
+        <a href="interfaces.html" class="topic-link-card delay-3">
+            <div class="card-header">
+                <div class="header-main-info">
+                    <div class="section-tag">2.3</div>
+                    <h2>Interfaces</h2>
+                </div>
+                <div class="redirect-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
+        </a>
+
+        <a href="packages.html" class="topic-link-card delay-4">
+            <div class="card-header">
+                <div class="header-main-info">
+                    <div class="section-tag">2.4</div>
+                    <h2>Packages</h2>
+                </div>
+                <div class="redirect-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
+        </a>
+
+        <a href="visibility.html" class="topic-link-card delay-5">
+            <div class="card-header">
+                <div class="header-main-info">
+                    <div class="section-tag">2.5</div>
+                    <h2>Visibility / Access Control</h2>
+                </div>
+                <div class="redirect-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
+        </a>
+
+    </main>
+
+    <footer>
+        <p>© 2026 Diploma Polytechnic Engineering Portal</p>
+    </footer>
+
+</body>
+</html>
