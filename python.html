@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Learning Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>🐍 Python Academy</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active" data-unit="home">Home</a></li>
+                <li><a href="#" class="nav-link" data-unit="unit1">Unit 1</a></li>
+                <li><a href="#" class="nav-link" data-unit="unit2">Unit 2</a></li>
+                <li><a href="#" class="nav-link" data-unit="unit3">Unit 3</a></li>
+                <li><a href="#" class="nav-link" data-unit="unit4">Unit 4</a></li>
+                <li><a href="#" class="nav-link" data-unit="unit5">Unit 5</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar for Sub-pages -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3 id="sidebar-title">Lessons</h3>
+            <button class="close-sidebar">&times;</button>
+        </div>
+        <div class="sidebar-content" id="sidebar-content">
+            <!-- Dynamically loaded lesson list -->
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Home Page -->
+        <section id="home" class="content-section active">
+            <div class="hero">
+                <h1 class="hero-title">Welcome to Python Academy</h1>
+                <p class="hero-subtitle">Master Python Programming from Basics to Advanced</p>
+                <div class="hero-cards">
+                    <div class="card unit-card" data-unit="unit1">
+                        <h3>Unit 1</h3>
+                        <p>Fundamentals & Basics</p>
+                        <span class="card-icon">📚</span>
+                    </div>
+                    <div class="card unit-card" data-unit="unit2">
+                        <h3>Unit 2</h3>
+                        <p>Control Flow & Functions</p>
+                        <span class="card-icon">🔄</span>
+                    </div>
+                    <div class="card unit-card" data-unit="unit3">
+                        <h3>Unit 3</h3>
+                        <p>Data Structures</p>
+                        <span class="card-icon">📊</span>
+                    </div>
+                    <div class="card unit-card" data-unit="unit4">
+                        <h3>Unit 4</h3>
+                        <p>Object-Oriented Programming</p>
+                        <span class="card-icon">⚙️</span>
+                    </div>
+                    <div class="card unit-card" data-unit="unit5">
+                        <h3>Unit 5</h3>
+                        <p>Advanced Concepts</p>
+                        <span class="card-icon">🚀</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Unit Pages (Dynamic) -->
+        <section id="unit1" class="content-section">
+            <div class="unit-header">
+                <h2>Unit 1: Fundamentals & Basics</h2>
+                <p>Learn the foundational concepts of Python programming</p>
+            </div>
+            <div id="unit1-content" class="unit-content">
+                <!-- Dynamically loaded content -->
+            </div>
+        </section>
+
+        <section id="unit2" class="content-section">
+            <div class="unit-header">
+                <h2>Unit 2: Control Flow & Functions</h2>
+                <p>Master conditional statements, loops, and functions</p>
+            </div>
+            <div id="unit2-content" class="unit-content">
+                <!-- Dynamically loaded content -->
+            </div>
+        </section>
+
+        <section id="unit3" class="content-section">
+            <div class="unit-header">
+                <h2>Unit 3: Data Structures</h2>
+                <p>Explore lists, tuples, dictionaries, and sets</p>
+            </div>
+            <div id="unit3-content" class="unit-content">
+                <!-- Dynamically loaded content -->
+            </div>
+        </section>
+
+        <section id="unit4" class="content-section">
+            <div class="unit-header">
+                <h2>Unit 4: Object-Oriented Programming</h2>
+                <p>Understand classes, objects, and inheritance</p>
+            </div>
+            <div id="unit4-content" class="unit-content">
+                <!-- Dynamically loaded content -->
+            </div>
+        </section>
+
+        <section id="unit5" class="content-section">
+            <div class="unit-header">
+                <h2>Unit 5: Advanced Concepts</h2>
+                <p>Dive into decorators, generators, and async programming</p>
+            </div>
+            <div id="unit5-content" class="unit-content">
+                <!-- Dynamically loaded content -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Overlay for sidebar -->
+    <div class="overlay" id="overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

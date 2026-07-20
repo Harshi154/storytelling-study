@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Unit 3 - Lesson 1 - Test</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 2rem; }
+        .test-container { max-width: 800px; margin: 0 auto; background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); }
+        h1 { color: #667eea; margin-bottom: 1rem; }
+        .test-info { background: #f5f5f5; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; border-left: 4px solid #667eea; }
+        .question { margin-bottom: 2rem; padding: 1.5rem; background: #f9f9f9; border-radius: 8px; border-left: 4px solid #667eea; }
+        .question h3 { color: #333; margin-bottom: 1rem; }
+        .options { display: flex; flex-direction: column; gap: 0.8rem; }
+        .option { display: flex; align-items: center; padding: 0.8rem; background: white; border: 2px solid #e0e0e0; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; }
+        .option:hover { border-color: #667eea; background: #f0f3ff; }
+        .option input[type="radio"] { margin-right: 1rem; cursor: pointer; }
+        .button-group { display: flex; gap: 1rem; margin-top: 2rem; }
+        button { padding: 0.8rem 2rem; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; }
+        .submit-btn { background: #667eea; color: white; flex: 1; }
+        .submit-btn:hover { background: #764ba2; transform: translateY(-2px); }
+        .reset-btn { background: #e0e0e0; color: #333; flex: 1; }
+        .reset-btn:hover { background: #d0d0d0; }
+        .results { display: none; margin-top: 2rem; padding: 2rem; background: #f0f8ff; border-radius: 8px; border: 2px solid #667eea; }
+        .results.show { display: block; animation: slideInUp 0.5s ease; }
+        .result-item { margin-bottom: 1.5rem; padding: 1rem; background: white; border-radius: 5px; }
+        .result-item.correct { border-left: 4px solid #4caf50; }
+        .result-item.incorrect { border-left: 4px solid #f44336; }
+        .score-display { font-size: 2rem; font-weight: bold; color: #667eea; text-align: center; margin: 1rem 0; }
+        @keyframes slideInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Lists - Test</h1>
+        <div class="test-info"><strong>Instructions:</strong> Answer all 5 questions. Click "Submit" to see your results.</div>
+        <form id="testForm">
+            <div class="question">
+                <h3>1. What is a list in Python?</h3>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q1" value="a"> <span>Ordered collection of items</span></label>
+                    <label class="option"><input type="radio" name="q1" value="b"> <span>A function</span></label>
+                    <label class="option"><input type="radio" name="q1" value="c"> <span>A variable</span></label>
+                    <label class="option"><input type="radio" name="q1" value="d"> <span>A string</span></label>
+                </div>
+            </div>
+            <div class="question">
+                <h3>2. How do you access the first item in a list?</h3>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q2" value="a"> <span>list[1]</span></label>
+                    <label class="option"><input type="radio" name="q2" value="b"> <span>list(0)</span></label>
+                    <label class="option"><input type="radio" name="q2" value="c"> <span>list[0]</span></label>
+                    <label class="option"><input type="radio" name="q2" value="d"> <span>list.first()</span></label>
+                </div>
+            </div>
+            <div class="question">
+                <h3>3. What does append() do?</h3>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q3" value="a"> <span>Removes an item</span></label>
+                    <label class="option"><input type="radio" name="q3" value="b"> <span>Adds item to end</span></label>
+                    <label class="option"><input type="radio" name="q3" value="c"> <span>Sorts the list</span></label>
+                    <label class="option"><input type="radio" name="q3" value="d"> <span>Reverses list</span></label>
+                </div>
+            </div>
+            <div class="question">
+                <h3>4. How do you get the length of a list?</h3>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q4" value="a"> <span>list.length()</span></label>
+                    <label class="option"><input type="radio" name="q4" value="b"> <span>length(list)</span></label>
+                    <label class="option"><input type="radio" name="q4" value="c"> <span>len(list)</span></label>
+                    <label class="option"><input type="radio" name="q4" value="d"> <span>list.size()</span></label>
+                </div>
+            </div>
+            <div class="question">
+                <h3>5. Can lists be changed?</h3>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q5" value="a"> <span>No, they're immutable</span></label>
+                    <label class="option"><input type="radio" name="q5" value="b"> <span>Yes, they're mutable</span></label>
+                    <label class="option"><input type="radio" name="q5" value="c"> <span>Only with functions</span></label>
+                    <label class="option"><input type="radio" name="q5" value="d"> <span>Never</span></label>
+                </div>
+            </div>
+            <div class="button-group">
+                <button type="submit" class="submit-btn">Submit Test</button>
+                <button type="reset" class="reset-btn">Reset</button>
+            </div>
+        </form>
+        <div class="results" id="results"></div>
+    </div>
+    <script>
+        const answers = { q1: 'a', q2: 'c', q3: 'b', q4: 'c', q5: 'b' };
+        document.getElementById('testForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let score = 0;
+            let resultsHTML = '<h2>Test Results</h2>';
+            for (let i = 1; i <= 5; i++) {
+                const userAnswer = document.querySelector(`input[name="q${i}"]:checked`);
+                const isCorrect = userAnswer && userAnswer.value === answers[`q${i}`];
+                if (isCorrect) score++;
+                resultsHTML += `<div class="result-item ${isCorrect ? 'correct' : 'incorrect'}"><strong>Question ${i}:</strong> ${isCorrect ? '✓ Correct' : '✗ Incorrect'}</div>`;
+            }
+            resultsHTML += `<div class="score-display">Score: ${score}/5 (${(score/5)*100}%)</div>`;
+            document.getElementById('results').innerHTML = resultsHTML;
+            document.getElementById('results').classList.add('show');
+        });
+    </script>
+</body>
+</html>

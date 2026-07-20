@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Unit 3 - Lesson 4 - Test</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 2rem; }
+        .test-container { max-width: 800px; margin: 0 auto; background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); }
+        h1 { color: #667eea; margin-bottom: 1rem; }
+        .test-info { background: #f5f5f5; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; border-left: 4px solid #667eea; }
+        .question { margin-bottom: 2rem; padding: 1.5rem; background: #f9f9f9; border-radius: 8px; border-left: 4px solid #667eea; }
+        .question h3 { color: #333; margin-bottom: 1rem; }
+        .options { display: flex; flex-direction: column; gap: 0.8rem; }
+        .option { display: flex; align-items: center; padding: 0.8rem; background: white; border: 2px solid #e0e0e0; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; }
+        .option:hover { border-color: #667eea; background: #f0f3ff; }
+        .option input[type="radio"] { margin-right: 1rem; cursor: pointer; }
+        .button-group { display: flex; gap: 1rem; margin-top: 2rem; }
+        button { padding: 0.8rem 2rem; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; }
+        .submit-btn { background: #667eea; color: white; flex: 1; }
+        .submit-btn:hover { background: #764ba2; transform: translateY(-2px); }
+        .reset-btn { background: #e0e0e0; color: #333; flex: 1; }
+        .reset-btn:hover { background: #d0d0d0; }
+        .results { display: none; margin-top: 2rem; padding: 2rem; background: #f0f8ff; border-radius: 8px; border: 2px solid #667eea; }
+        .results.show { display: block; animation: slideInUp 0.5s ease; }
+        .result-item { margin-bottom: 1.5rem; padding: 1rem; background: white; border-radius: 5px; }
+        .result-item.correct { border-left: 4px solid #4caf50; }
+        .result-item.incorrect { border-left: 4px solid #f44336; }
+        .score-display { font-size: 2rem; font-weight: bold; color: #667eea; text-align: center; margin: 1rem 0; }
+        @keyframes slideInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>List Comprehension - Test</h1>
+        <div class="test-info"><strong>Instructions:</strong> Answer all 5 questions. Click "Submit" to see your results.</div>
+        <form id="testForm">
+            <div class="question">
+                <h3>1. What is list comprehension?</h3>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q1" value="a"> <span>A concise way to create lists</span></label>
+                    <label class="option"><input type="radio" name="q1" value="b"> <span>Understanding lists</span></label>
+                    <label class="option"><input type="radio" name="q1" value="c"> <span>Reading a list</span></label>
+                    <label class="option"><input type="radio" name="q1" value="d"> <span>A loop</span></label>
+                </div>
+            </div>
+            <div class="question">
+                <h3>2. What does [x**2 for x in range(5)] produce?</h3>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q2" value="a"> <span>[0, 1, 4, 9, 16]</span></label>
+                    <label class="option"><input type="radio" name="q2" value="b"> <span>[1, 2, 4, 9, 25]</span></label>
+                    <label class="option"><input type="radio" name="q2" value="c"> <span>[0, 1, 2, 3, 4]</span></label>
+                    <label class="option"><input type="radio" name="q2" value="d"> <span>[1, 4, 9, 16, 25]</span></label>
+                </div>
+            </div>
+            <div class="question">
+                <h3>3. How do you add a condition to list comprehension?</h3>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q3" value="a"> <span>[x for x in list if condition]</span></label>
+                    <label class="option"><input type="radio" name="q3" value="b"> <span>[x for x in list when condition]</span></label>
+                    <label class="option"><input type="radio" name="q3" value="c"> <span>[x for x in list where condition]</span></label>
+                    <label class="option"><input type="radio" name="q3" value="d"> <span>[x for x in list and condition]</span></label>
+                </div>
+            </div>
+            <div class="question">
+                <h3>4. What gets the even numbers from 1-10?</h3>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q4" value="a"> <span>[x for x in range(1, 11) if x%2==0]</span></label>
+                    <label class="option"><input type="radio" name="q4" value="b"> <span>[x for x in range(1, 10) if x%2==0]</span></label>
+                    <label class="option"><input type="radio" name="q4" value="c"> <span>[x for x in range(10) if x%2==0]</span></label>
+                    <label class="option"><input type="radio" name="q4" value="d"> <span>[x for x in list(1, 11) if x%2==0]</span></label>
+                </div>
+            </div>
+            <div class="question">
+                <h3>5. Is list comprehension faster than loops?</h3>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q5" value="a"> <span>No, same speed</span></label>
+                    <label class="option"><input type="radio" name="q5" value="b"> <span>Yes, much faster</span></label>
+                    <label class="option"><input type="radio" name="q5" value="c"> <span>Never</span></label>
+                    <label class="option"><input type="radio" name="q5" value="d"> <span>Depends on size</span></label>
+                </div>
+            </div>
+            <div class="button-group">
+                <button type="submit" class="submit-btn">Submit Test</button>
+                <button type="reset" class="reset-btn">Reset</button>
+            </div>
+        </form>
+        <div class="results" id="results"></div>
+    </div>
+    <script>
+        const answers = { q1: 'a', q2: 'a', q3: 'a', q4: 'a', q5: 'b' };
+        document.getElementById('testForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let score = 0;
+            let resultsHTML = '<h2>Test Results</h2>';
+            for (let i = 1; i <= 5; i++) {
+                const userAnswer = document.querySelector(`input[name="q${i}"]:checked`);
+                const isCorrect = userAnswer && userAnswer.value === answers[`q${i}`];
+                if (isCorrect) score++;
+                resultsHTML += `<div class="result-item ${isCorrect ? 'correct' : 'incorrect'}"><strong>Question ${i}:</strong> ${isCorrect ? '✓ Correct' : '✗ Incorrect'}</div>`;
+            }
+            resultsHTML += `<div class="score-display">Score: ${score}/5 (${(score/5)*100}%)</div>`;
+            document.getElementById('results').innerHTML = resultsHTML;
+            document.getElementById('results').classList.add('show');
+        });
+    </script>
+</body>
+</html>
